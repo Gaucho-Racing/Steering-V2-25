@@ -46,33 +46,11 @@ void MX_FLASH_Init(void)
 
   FLASH_BBSecInitStruct.Bank = FLASH_BANK_1;
   FLASH_BBSecInitStruct.BBAttributesType = FLASH_BB_PRIV;
-  FLASH_BBSecInitStruct.BBAttributes_array[0] =   0xFFFFFFFF;
-  FLASH_BBSecInitStruct.BBAttributes_array[1] =   0xFFFFFFFF
-                              ;
-  FLASH_BBSecInitStruct.BBAttributes_array[2] =   0xFFFFFFFF;
-  FLASH_BBSecInitStruct.BBAttributes_array[3] =   0xFFFFFFFF
-                              ;
-  FLASH_BBSecInitStruct.BBAttributes_array[4] =   0xFFFFFFFF;
-  FLASH_BBSecInitStruct.BBAttributes_array[5] =   0xFFFFFFFF
-                              ;
-  FLASH_BBSecInitStruct.BBAttributes_array[6] =   0xFFFFFFFF;
-  FLASH_BBSecInitStruct.BBAttributes_array[7] =   0xFFFFFFFF;
   if (HAL_FLASHEx_ConfigBBAttributes(&FLASH_BBSecInitStruct) != HAL_OK)
   {
     Error_Handler();
   }
   FLASH_BBSecInitStruct.Bank = FLASH_BANK_2;
-  FLASH_BBSecInitStruct.BBAttributes_array[0] =   0xFFFFFFFF;
-  FLASH_BBSecInitStruct.BBAttributes_array[1] =   0xFFFFFFFF
-                              ;
-  FLASH_BBSecInitStruct.BBAttributes_array[2] =   0xFFFFFFFF;
-  FLASH_BBSecInitStruct.BBAttributes_array[3] =   0xFFFFFFFF
-                              ;
-  FLASH_BBSecInitStruct.BBAttributes_array[4] =   0xFFFFFFFF;
-  FLASH_BBSecInitStruct.BBAttributes_array[5] =   0xFFFFFFFF
-                              ;
-  FLASH_BBSecInitStruct.BBAttributes_array[6] =   0xFFFFFFFF;
-  FLASH_BBSecInitStruct.BBAttributes_array[7] =   0xFFFFFFFF;
   if (HAL_FLASHEx_ConfigBBAttributes(&FLASH_BBSecInitStruct) != HAL_OK)
   {
     Error_Handler();

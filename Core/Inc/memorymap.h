@@ -36,8 +36,6 @@ extern "C" {
 
 /* USER CODE END Private defines */
 
-void MX_MEMORYMAP_Init(void);
-
 /* USER CODE BEGIN Prototypes */
 
 /* USER CODE END Prototypes */
