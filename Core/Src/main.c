@@ -170,7 +170,9 @@ int main(void)
 
   /* initialize display and touchscreen */
   lvgl_display_init();
-  lvgl_touchscreen_init();
+
+  // No touchscreen allowed :(
+  // lvgl_touchscreen_init();
 
   /* lvgl demo */
   lv_demo_widgets();
@@ -198,7 +200,7 @@ int main(void)
   }
   /* USER CODE END 3 */
 }
-
+g
 /**
   * @brief System Clock Configuration
   * @retval None
