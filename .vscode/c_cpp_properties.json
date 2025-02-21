@@ -6,7 +6,7 @@
                 "${workspaceFolder}/**"
             ],
             "defines": [
-                "STM32G474xx"
+                "STM32U5xx"
             ],
             "compilerPath": "/usr/bin/arm-none-eabi-gcc",
             "cStandard": "c17",
