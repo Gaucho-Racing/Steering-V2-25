@@ -27,6 +27,14 @@ include("cmake/gcc-arm-none-eabi.cmake")
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
+# Specify path to own LVGL config header
+set(LV_CONF_PATH
+    ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/LVGL/lv_conf.h
+    CACHE STRING "" FORCE)
+set(LV_GPU_DMA2D_CMSIS_INCLUDE
+    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CMSIS/Device/ST/STM32U5xx/Include/stm32u5xx.h
+    CACHE STRING "" FORCE)
+
 # Enable CMake support for ASM and C languages
 enable_language(C ASM)
 
@@ -38,8 +46,8 @@ message("Build type: " ${CMAKE_BUILD_TYPE})
 add_executable(${CMAKE_PROJECT_NAME})
 
 # Add STM32CubeMX generated sources
-add_subdirectory(cmake/stm32cubemx)
 add_subdirectory(Middlewares/Third_Party/LVGL/lvgl)
+add_subdirectory(cmake/stm32cubemx)
 
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
@@ -54,7 +62,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
-    Middlewares/Third_Party/LVGL/
+    Middlewares/Third_Party/LVGL
 )
 
 # Add project symbols (macros)
