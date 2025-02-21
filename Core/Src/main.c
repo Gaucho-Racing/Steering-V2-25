@@ -200,7 +200,7 @@ int main(void)
   }
   /* USER CODE END 3 */
 }
-g
+
 /**
   * @brief System Clock Configuration
   * @retval None
