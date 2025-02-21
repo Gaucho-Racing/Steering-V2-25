@@ -27,14 +27,6 @@ include("cmake/gcc-arm-none-eabi.cmake")
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
-# Specify path to own LVGL config header
-set(LV_CONF_PATH
-    ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/LVGL/lv_conf.h
-    CACHE STRING "" FORCE)
-set(LV_GPU_DMA2D_CMSIS_INCLUDE
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CMSIS/Device/ST/STM32U5xx/Include/stm32u5xx.h
-    CACHE STRING "" FORCE)
-
 # Enable CMake support for ASM and C languages
 enable_language(C ASM)
 
@@ -45,9 +37,15 @@ message("Build type: " ${CMAKE_BUILD_TYPE})
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME})
 
+
 # Add STM32CubeMX generated sources
 add_subdirectory(Middlewares/Third_Party/LVGL/lvgl)
 add_subdirectory(cmake/stm32cubemx)
+
+target_include_directories(lvgl PUBLIC
+    Drivers/CMSIS/Device/ST/STM32U5xx/Include
+    Drivers/CMSIS/Include
+)
 
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
@@ -57,6 +55,9 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
+    Core/Src/lvgl_port_display.c
+    Core/Src/lvgl_port_touch.c
+    Core/Src/mx25lm51245g.c
 )
 
 # Add include paths
@@ -75,4 +76,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
 
     # Add user defined libraries
+    lvgl
+    lvgl_demos
 )
