@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [{
         "cwd": "${workspaceFolder}",
-        "executable": "./build/Debug/riverdi-50-stm32u5-lvgl.elf",
+        "executable": "./build/Debug/dashPanel25.elf",
         "name": "Debug with OpenOCD",
         "request": "launch",
         "type": "cortex-debug",

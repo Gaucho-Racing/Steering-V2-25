@@ -19,7 +19,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set the project name
-set(CMAKE_PROJECT_NAME riverdi-50-stm32u5-lvgl)
+set(CMAKE_PROJECT_NAME dashPanel25)
 
 # Include toolchain file
 include("cmake/gcc-arm-none-eabi.cmake")
@@ -45,6 +45,7 @@ add_subdirectory(cmake/stm32cubemx)
 target_include_directories(lvgl PUBLIC
     Drivers/CMSIS/Device/ST/STM32U5xx/Include
     Drivers/CMSIS/Include
+    Middlewares/Third_Party/LVGL
 )
 
 # Link directories setup
