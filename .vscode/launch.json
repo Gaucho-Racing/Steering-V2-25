@@ -12,6 +12,5 @@
         "preLaunchTask": "CMake: build",
         "showDevDebugOutput": "raw",
         "svdPath": "${workspaceFolder}/.vscode/STM32U599.svd"
-    }],
-    "compounds": []
+    }]
 }
