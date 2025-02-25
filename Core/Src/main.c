@@ -169,6 +169,7 @@ int main(void)
   lv_init();
 
   lv_obj_t * scr = lv_obj_create(NULL);
+  // lv_screen_load(scr);
 
   lv_obj_t * flexCol1 = lv_obj_create(scr);
   lv_obj_set_layout(flexCol1, LV_LAYOUT_FLEX);
