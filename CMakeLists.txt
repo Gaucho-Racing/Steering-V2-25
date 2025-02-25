@@ -19,7 +19,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set the project name
-set(CMAKE_PROJECT_NAME riverdi-50-stm32u5-lvgl)
+set(CMAKE_PROJECT_NAME dashPanel25)
 
 # Include toolchain file
 include("cmake/gcc-arm-none-eabi.cmake")
@@ -37,8 +37,16 @@ message("Build type: " ${CMAKE_BUILD_TYPE})
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME})
 
+
 # Add STM32CubeMX generated sources
+add_subdirectory(Middlewares/Third_Party/LVGL/lvgl)
 add_subdirectory(cmake/stm32cubemx)
+
+target_include_directories(lvgl PUBLIC
+    Drivers/CMSIS/Device/ST/STM32U5xx/Include
+    Drivers/CMSIS/Include
+    Middlewares/Third_Party/LVGL
+)
 
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
@@ -48,11 +56,15 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
+    Core/Src/lvgl_port_display.c
+    Core/Src/lvgl_port_touch.c
+    Core/Src/mx25lm51245g.c
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
+    Middlewares/Third_Party/LVGL
 )
 
 # Add project symbols (macros)
@@ -65,4 +77,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
 
     # Add user defined libraries
+    lvgl
+    lvgl_demos
 )
