@@ -11,6 +11,6 @@
         "searchDir": [],
         "preLaunchTask": "CMake: build",
         "showDevDebugOutput": "raw",
-        "svdPath": "${workspaceFolder}/.vscode/STM32U599.svd"
+        "svdPath": "${workspaceFolder}/.vscode/STM32U5A9.svd"
     }]
 }
