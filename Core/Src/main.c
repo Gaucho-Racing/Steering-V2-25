@@ -168,6 +168,35 @@ int main(void)
   /* initialize LVGL framework */
   lv_init();
 
+  lv_obj_t * scr = lv_obj_create(NULL);
+
+  lv_obj_t * flexCol1 = lv_obj_create(scr);
+  lv_obj_set_layout(flexCol1, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(flexCol1, LV_FLEX_FLOW_COLUMN);
+
+  lv_obj_t * flexRow1 = lv_obj_create(flexCol1);
+  lv_obj_t * flexRow2 = lv_obj_create(flexCol1);
+  lv_obj_set_layout(flexRow1, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(flexRow1, LV_FLEX_FLOW_ROW);
+  lv_obj_set_layout(flexRow2, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(flexRow2, LV_FLEX_FLOW_ROW);
+
+  // Dummy screen test
+
+  lv_obj_t * label1 = lv_obj_create(flexRow1);
+  lv_obj_t * label2 = lv_obj_create(flexRow2);
+
+  lv_label_set_text(label1, "Skibidi toilet rizz.");
+  lv_label_set_text(label2, "Courtesy of Gaucho Racing");
+
+  // lv_obj_t * flexRow1Col1 = lv_obj_create(flexRow1);
+  // lv_obj_t * flexRow1Col2 = lv_obj_create(flexRow1);
+  // lv_obj_t * flexRow1Col3 = lv_obj_create(flexRow1);
+
+  // lv_obj_t * flexRow2Col1 = lv_obj_create(flexRow2);
+  // lv_obj_t * flexRow2Row1 = lv_obj_create(flexRow2);
+
+
   /* initialize display and touchscreen */
   lvgl_display_init();
 
