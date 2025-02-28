@@ -194,7 +194,7 @@ int main(void)
 
   /*
    * https://docs.lvgl.io/master/details/widgets/label.html - for changing label texts
-   * 
+   * https://forum.lvgl.io/t/backgroud-colour/2036 - for changing color
    * 
    * 
    * 
@@ -249,11 +249,16 @@ int main(void)
   lv_obj_t * flexRow2Col1Row2 = lv_obj_create(flexRow2Col1);
   lv_obj_set_layout(flexRow2Col1Row2, LV_LAYOUT_FLEX);
   lv_obj_set_flex_flow(flexRow2Col1Row2, LV_FLEX_FLOW_ROW);
+  lv_obj_t * flexRow2Col1Row3 = lv_obj_create(flexRow2Col1);
+  lv_obj_set_layout(flexRow2Col1Row3, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(flexRow2Col1Row3, LV_FLEX_FLOW_ROW);
 
-  lv_obj_t * wheelFL = lv_obj_create(flexRow2Col1Row1);
-  lv_obj_t * wheelFR = lv_obj_create(flexRow2Col1Row1);
-  lv_obj_t * wheelRL = lv_obj_create(flexRow2Col1Row2);
-  lv_obj_t * wheelRR = lv_obj_create(flexRow2Col1Row2);
+  lv_obj_t * wheelFLWidget = lv_obj_create(flexRow2Col1Row1);
+  lv_obj_t * wheelFRWidget = lv_obj_create(flexRow2Col1Row1);
+  lv_obj_t * wheelRLWidget = lv_obj_create(flexRow2Col1Row3);
+  lv_obj_t * wheelRRWidget = lv_obj_create(flexRow2Col1Row3);
+
+  lv_obj_t * carDirectionWidget = lv_obj_create(flexRow2Col1Row2);
 
   // Temperature, battery, inverter, motor, water coolant, tire, brake
 
