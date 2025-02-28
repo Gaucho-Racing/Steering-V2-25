@@ -190,7 +190,16 @@ int main(void)
   // lv_label_set_text(label1, "Skibidi toilet rizz.");
   // lv_label_set_text(label2, "Courtesy of Gaucho Racing");
 
-  // Real code
+  // Real code 
+
+  /*
+   * https://docs.lvgl.io/master/details/widgets/label.html - for changing label texts
+   * 
+   * 
+   * 
+   * 
+   * 
+  */
 
   // Top Row
 
