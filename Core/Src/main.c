@@ -184,18 +184,76 @@ int main(void)
 
   // Dummy screen test
 
-  lv_obj_t * label1 = lv_obj_create(flexRow1);
-  lv_obj_t * label2 = lv_obj_create(flexRow2);
+  // lv_obj_t * label1 = lv_obj_create(flexRow1);
+  // lv_obj_t * label2 = lv_obj_create(flexRow2);
 
-  lv_label_set_text(label1, "Skibidi toilet rizz.");
-  lv_label_set_text(label2, "Courtesy of Gaucho Racing");
+  // lv_label_set_text(label1, "Skibidi toilet rizz.");
+  // lv_label_set_text(label2, "Courtesy of Gaucho Racing");
 
-  // lv_obj_t * flexRow1Col1 = lv_obj_create(flexRow1);
-  // lv_obj_t * flexRow1Col2 = lv_obj_create(flexRow1);
-  // lv_obj_t * flexRow1Col3 = lv_obj_create(flexRow1);
+  // Real code
 
-  // lv_obj_t * flexRow2Col1 = lv_obj_create(flexRow2);
-  // lv_obj_t * flexRow2Row1 = lv_obj_create(flexRow2);
+  // Top Row
+
+  lv_obj_t * flexRow1Col1 = lv_obj_create(flexRow1);
+  lv_obj_set_layout(flexRow1Col1, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(flexRow1Col1, LV_FLEX_FLOW_COLUMN);
+  lv_obj_t * flexRow1Col2 = lv_obj_create(flexRow1);
+  lv_obj_set_layout(flexRow1Col2, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(flexRow1Col2, LV_FLEX_FLOW_COLUMN);
+  lv_obj_t * flexRow1Col3 = lv_obj_create(flexRow1);
+  lv_obj_set_layout(flexRow1Col3, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(flexRow1Col3, LV_FLEX_FLOW_COLUMN);
+
+  // Bottom Row
+
+  lv_obj_t * flexRow2Col1 = lv_obj_create(flexRow2);
+  lv_obj_set_layout(flexRow2Col1, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(flexRow2Col1, LV_FLEX_FLOW_COLUMN);
+  lv_obj_t * flexRow2Row1 = lv_obj_create(flexRow2);
+  lv_obj_set_layout(flexRow2Row1, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(flexRow2Row1, LV_FLEX_FLOW_ROW);
+
+  // Power - voltage, SOC, and total power
+
+  lv_obj_t * voltageWidget = lv_obj_create(flexRow1Col1);
+  lv_obj_t * socWidget = lv_obj_create(flexRow1Col1);
+  lv_obj_t * totalPowerWidget = lv_obj_create(flexRow1Col1);
+
+  // Main - speed, state, and warning
+
+  lv_obj_t * speedWidget = lv_obj_create(flexRow1Col2);
+  lv_obj_t * stateWidget = lv_obj_create(flexRow1Col2);
+  lv_obj_t * warningWidget = lv_obj_create(flexRow1Col2);
+
+  // Dials 
+
+  lv_obj_t * regenEncoder = lv_obj_create(flexRow1Col3);
+  lv_obj_t * currentEncoder = lv_obj_create(flexRow1Col3);
+  lv_obj_t * torqueMapEncoder = lv_obj_create(flexRow1Col3);
+
+
+  // Car diagram
+
+  lv_obj_t * flexRow2Col1Row1 = lv_obj_create(flexRow2Col1);
+  lv_obj_set_layout(flexRow2Col1Row1, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(flexRow2Col1Row1, LV_FLEX_FLOW_ROW);
+  lv_obj_t * flexRow2Col1Row2 = lv_obj_create(flexRow2Col1);
+  lv_obj_set_layout(flexRow2Col1Row2, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(flexRow2Col1Row2, LV_FLEX_FLOW_ROW);
+
+  lv_obj_t * wheelFL = lv_obj_create(flexRow2Col1Row1);
+  lv_obj_t * wheelFR = lv_obj_create(flexRow2Col1Row1);
+  lv_obj_t * wheelRL = lv_obj_create(flexRow2Col1Row2);
+  lv_obj_t * wheelRR = lv_obj_create(flexRow2Col1Row2);
+
+  // Temperature, battery, inverter, motor, water coolant, tire, brake
+
+  lv_obj_t * batteryTempWidget = lv_obj_create(flexRow2Row1);
+  lv_obj_t * inverterTempWidget = lv_obj_create(flexRow2Row1);
+  lv_obj_t * motorTempWidget = lv_obj_create(flexRow2Row1);
+  lv_obj_t * waterCoolantTempWidget = lv_obj_create(flexRow2Row1);
+  lv_obj_t * tireTempWidget = lv_obj_create(flexRow2Row1);
+  lv_obj_t * brakeTempWidget = lv_obj_create(flexRow2Row1);
 
 
   /* initialize display and touchscreen */
