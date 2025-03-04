@@ -167,7 +167,16 @@ int main(void)
 
   /* initialize LVGL framework */
   lv_init();
-  
+
+  /* initialize display and touchscreen */
+  lvgl_display_init();
+
+  // No touchscreen allowed :(
+  // lvgl_touchscreen_init();
+
+  /* lvgl demo */
+  lv_demo_widgets();
+
   lv_obj_t * scr = lv_obj_create(NULL);
   // lv_screen_load(scr);
 
@@ -268,16 +277,6 @@ int main(void)
   // lv_obj_t * waterCoolantTempWidget = lv_obj_create(flexRow2Row1);
   // lv_obj_t * tireTempWidget = lv_obj_create(flexRow2Row1);
   // lv_obj_t * brakeTempWidget = lv_obj_create(flexRow2Row1);
-
-
-  /* initialize display and touchscreen */
-  lvgl_display_init();
-
-  // No touchscreen allowed :(
-  // lvgl_touchscreen_init();
-
-  /* lvgl demo */
-  lv_demo_widgets();
 
   /* USER CODE END 2 */
 
