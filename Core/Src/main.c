@@ -193,11 +193,11 @@ int main(void)
 
   // Dummy screen test
 
-  // lv_obj_t * label1 = lv_obj_create(flexRow1);
-  // lv_obj_t * label2 = lv_obj_create(flexRow2);
+  lv_obj_t * label1 = lv_obj_create(flexRow1);
+  lv_obj_t * label2 = lv_obj_create(flexRow2);
 
-  // lv_label_set_text(label1, "Skibidi toilet rizz.");
-  // lv_label_set_text(label2, "Courtesy of Gaucho Racing");
+  lv_label_set_text(label1, "Skibidi toilet rizz.");
+  lv_label_set_text(label2, "Courtesy of Gaucho Racing");
 
   // Real code 
 
