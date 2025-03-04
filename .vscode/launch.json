@@ -16,19 +16,6 @@
     {
         "cwd": "${workspaceFolder}",
         "executable": "./build/Debug/dashPanel25.elf",
-        "name": "Debug with STLINK",
-        "request": "launch",
-        "type": "cortex-debug",
-        "servertype": "stlink",
-        "configFiles": ["interface/stlink.cfg", "target/stm32u5x.cfg"],
-        "searchDir": [],
-        "preLaunchTask": "CMake: build",
-        "showDevDebugOutput": "raw",
-        "svdPath": "${workspaceFolder}/.vscode/STM32U5A9.svd"
-    },
-    {
-        "cwd": "${workspaceFolder}",
-        "executable": "./build/Debug/dashPanel25.elf",
         "name": "Debug with STUTIL",
         "request": "launch",
         "type": "cortex-debug",
