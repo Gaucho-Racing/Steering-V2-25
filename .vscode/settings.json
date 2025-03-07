@@ -3,5 +3,6 @@
         "*.h": "c",
         "*.c": "c",
     },
-    "cSpell.diagnosticLevel": "Hint"
+    "cSpell.diagnosticLevel": "Hint",
+    "cmake.sourceDirectory": "${workspaceFolder}/Users/aagrim/Workspace/c/pico-examples/gpio"
 }

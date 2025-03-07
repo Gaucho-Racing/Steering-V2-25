@@ -11,14 +11,14 @@
  *  STATIC PROTOTYPES
  **********************/
 
-static void disp_flush (lv_disp_drv_t*, const lv_area_t*, lv_color_t*);
+static void disp_flush (lv_display_t*, const lv_area_t*, lv_color_t*);
 static void disp_flush_complete (DMA2D_HandleTypeDef*);
 
 /**********************
  *  STATIC VARIABLES
  **********************/
 
-static lv_disp_drv_t disp_drv;
+static lv_display_t disp_drv;
 static lv_disp_draw_buf_t disp_buf;
 
 static __attribute__((aligned(32))) lv_color_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];
@@ -40,7 +40,8 @@ lvgl_display_init (void)
   //                        MY_DISP_HOR_RES * MY_DISP_VER_RES);
 
   lv_display_t * display = lv_display_create(MY_DISP_HOR_RES, MY_DISP_VER_RES);
-  lv_display_set_flush_cb(display, )
+  lv_display_set_flush_cb(display, disp_flush);
+  lv_display_set_buffers(display);
   /* register the display in LVGL */
   lv_disp_drv_init(&disp_drv);
 
@@ -68,11 +69,12 @@ lvgl_display_init (void)
  **********************/
 
 static void
-disp_flush (lv_disp_drv_t   *drv,
+disp_flush (lv_display_t   *drv,
             const lv_area_t *area,
             lv_color_t      *color_p)
 {
-  // TODO: update such that drv 
+  // TODO: update such that drv --> lv_display_t
+  // TODO: update such that color_p --> uint8_t
   lv_coord_t width = lv_area_get_width(area);
   lv_coord_t height = lv_area_get_height(area);
 
