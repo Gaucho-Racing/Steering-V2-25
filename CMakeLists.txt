@@ -42,6 +42,7 @@ add_executable(${CMAKE_PROJECT_NAME})
 add_subdirectory(Middlewares/Third_Party/LVGL/lvgl)
 add_subdirectory(cmake/stm32cubemx)
 
+# The ordering is bad sorry
 target_include_directories(lvgl PUBLIC
     Drivers/CMSIS/Device/ST/STM32U5xx/Include
     Drivers/CMSIS/Include
