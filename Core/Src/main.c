@@ -181,7 +181,7 @@ int main(void)
   lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
 
   /* Create a spinner */
-  lv_obj_t * spinner = lv_spinner_create(lv_screen_active(), 1000, 60);
+  lv_obj_t * spinner = lv_spinner_create(lv_screen_active()/*, 1000, 60*/);
   lv_obj_set_size(spinner, 64, 64);
 
   // static lv_style_t style;

@@ -175,6 +175,7 @@ void StartDefaultTask(void *argument)
   {
     osDelay(1);
   }
+  UNUSED(argument);
   /* USER CODE END defaultTask */
 }
 
@@ -188,6 +189,7 @@ void LVGLTimer(void *argument)
     lv_timer_handler();
     osDelay(20);
   }
+  UNUSED(argument);
 }
 /* LVGL tick source */
 void LVGLTick(void *argument)
@@ -197,6 +199,7 @@ void LVGLTick(void *argument)
     lv_tick_inc(10);
     osDelay(10);
   }
+  UNUSED(argument);
 }
 /* USER CODE END Application */
 
