@@ -48,6 +48,7 @@ target_include_directories(lvgl PUBLIC
     Middlewares/Third_Party/LVGL
     Middlewares/Third_Party/FreeRTOS/Source/include
     Middlewares/Third_Party/CMSIS/RTOS2/Include
+    Core/Inc
 )
 
 # Link directories setup
