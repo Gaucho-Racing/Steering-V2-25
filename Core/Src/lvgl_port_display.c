@@ -66,9 +66,7 @@ void lvgl_display_init(void)
  *   STATIC FUNCTIONS
  **********************/
 
-static void disp_flush(lv_display_t *drv,
-           const lv_area_t *area,
-           uint8_t *color_p)
+static void disp_flush(lv_display_t *drv, const lv_area_t *area, uint8_t *color_p)
 {
   // TODO: update such that drv --> lv_display_t
   // TODO: update such that color_p --> uint8_t
@@ -88,8 +86,7 @@ static void disp_flush(lv_display_t *drv,
   DMA2D->CR |= DMA2D_CR_START;
 }
 
-static void
-disp_flush_complete(DMA2D_HandleTypeDef *hdma2d)
+static void disp_flush_complete(DMA2D_HandleTypeDef *hdma2d)
 {
   lv_display_flush_ready(display);
 }
