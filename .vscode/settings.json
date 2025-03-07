@@ -4,5 +4,4 @@
         "*.c": "c",
     },
     "cSpell.diagnosticLevel": "Hint",
-    "cmake.sourceDirectory": "/home/dchucsb/gaucho-racing/Dash-Panel-V2"
 }
