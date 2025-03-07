@@ -57,7 +57,6 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     Core/Src/lvgl_port_display.c
-    Core/Src/lvgl_port_touch.c
     Core/Src/mx25lm51245g.c
 )
 
