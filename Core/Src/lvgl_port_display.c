@@ -11,15 +11,14 @@
  *  STATIC PROTOTYPES
  **********************/
 
-static void disp_flush (lv_display_t*, const lv_area_t*, lv_color_t*);
-static void disp_flush_complete (DMA2D_HandleTypeDef*);
+static void disp_flush(lv_display_t *, const lv_area_t *, uint8_t *);
+static void disp_flush_complete(DMA2D_HandleTypeDef *);
 
 /**********************
  *  STATIC VARIABLES
  **********************/
 
-static lv_display_t disp_drv;
-static lv_draw_buf_t disp_buf;
+static lv_display_t *display;
 
 static __attribute__((aligned(32))) lv_color_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];
 
@@ -27,8 +26,7 @@ static __attribute__((aligned(32))) lv_color_t buf_1[MY_DISP_HOR_RES * MY_DISP_V
  *   GLOBAL FUNCTIONS
  **********************/
 
-void
-lvgl_display_init (void)
+void lvgl_display_init(void)
 {
   /* display initialization */
   ; /* display is already initialized by cubemx-generated code */
@@ -41,7 +39,7 @@ lvgl_display_init (void)
 
   /* register the display in LVGL */
   // lv_disp_drv_init(&disp_drv);
-  lv_display_t * display = lv_display_create(MY_DISP_HOR_RES, MY_DISP_VER_RES);
+  display = lv_display_create(MY_DISP_HOR_RES, MY_DISP_VER_RES);
   lv_display_set_flush_cb(display, disp_flush);
   lv_display_set_buffers(display, buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
 
@@ -69,9 +67,9 @@ lvgl_display_init (void)
  **********************/
 
 static void
-disp_flush (lv_display_t   *drv,
-            const lv_area_t *area,
-            lv_color_t      *color_p)
+disp_flush(lv_display_t *drv,
+           const lv_area_t *area,
+           uint8_t *color_p)
 {
   // TODO: update such that drv --> lv_display_t
   // TODO: update such that color_p --> uint8_t
@@ -83,8 +81,7 @@ disp_flush (lv_display_t   *drv,
   DMA2D->FGMAR = (uint32_t)color_p;
   DMA2D->FGOR = 0;
   DMA2D->OPFCCR = DMA2D_OUTPUT_RGB565;
-  DMA2D->OMAR = hltdc.LayerCfg[0].FBStartAdress + 2 * \
-                (area->y1 * MY_DISP_HOR_RES + area->x1);
+  DMA2D->OMAR = hltdc.LayerCfg[0].FBStartAdress + 2 * (area->y1 * MY_DISP_HOR_RES + area->x1);
   DMA2D->OOR = MY_DISP_HOR_RES - width;
   DMA2D->NLR = (width << DMA2D_NLR_PL_Pos) | (height << DMA2D_NLR_NL_Pos);
   DMA2D->IFCR = 0x3FU;
@@ -93,7 +90,7 @@ disp_flush (lv_display_t   *drv,
 }
 
 static void
-disp_flush_complete (DMA2D_HandleTypeDef *hdma2d)
+disp_flush_complete(DMA2D_HandleTypeDef *hdma2d)
 {
-  lv_disp_flush_ready(&disp_drv);
+  lv_display_flush_ready(display);
 }
