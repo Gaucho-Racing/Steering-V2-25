@@ -19,7 +19,7 @@ static void disp_flush_complete (DMA2D_HandleTypeDef*);
  **********************/
 
 static lv_display_t disp_drv;
-static lv_disp_draw_buf_t disp_buf;
+static lv_draw_buf_t disp_buf;
 
 static __attribute__((aligned(32))) lv_color_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];
 
@@ -39,29 +39,29 @@ lvgl_display_init (void)
   //                        NULL,
   //                        MY_DISP_HOR_RES * MY_DISP_VER_RES);
 
+  /* register the display in LVGL */
+  // lv_disp_drv_init(&disp_drv);
   lv_display_t * display = lv_display_create(MY_DISP_HOR_RES, MY_DISP_VER_RES);
   lv_display_set_flush_cb(display, disp_flush);
-  lv_display_set_buffers(display);
-  /* register the display in LVGL */
-  lv_disp_drv_init(&disp_drv);
+  lv_display_set_buffers(display, buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
 
   /* set the resolution of the display */
-  disp_drv.hor_res = MY_DISP_HOR_RES;
-  disp_drv.ver_res = MY_DISP_VER_RES;
+  // disp_drv.hor_res = MY_DISP_HOR_RES;
+  // disp_drv.ver_res = MY_DISP_VER_RES;
 
   /* set callback for display driver */
-  disp_drv.flush_cb = disp_flush;
-  disp_drv.full_refresh = 0;
-  disp_drv.direct_mode = 1;
+  // disp_drv.flush_cb = disp_flush;
+  // disp_drv.full_refresh = 0;
+  // disp_drv.direct_mode = 1;
 
   /* interrupt callback for DMA2D transfer */
   hdma2d.XferCpltCallback = disp_flush_complete;
 
   /* set a display buffer */
-  disp_drv.draw_buf = &disp_buf;
+  // disp_drv.draw_buf = &disp_buf;
 
   /* finally register the driver */
-  lv_disp_drv_register(&disp_drv);
+  // lv_disp_drv_register(&disp_drv);
 }
 
 /**********************
