@@ -49,6 +49,10 @@ target_include_directories(lvgl PUBLIC
     Middlewares/Third_Party/FreeRTOS/Source/include
     Middlewares/Third_Party/CMSIS/RTOS2/Include
     Core/Inc
+    Drivers/STM32U5xx_HAL_Driver/Inc
+    Drivers/STM32U5xx_HAL_Driver/Inc/Legacy
+    Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/
+    Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/
 )
 
 # Link directories setup
