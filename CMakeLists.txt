@@ -46,8 +46,8 @@ target_include_directories(lvgl PUBLIC
     Drivers/CMSIS/Device/ST/STM32U5xx/Include
     Drivers/CMSIS/Include
     Middlewares/Third_Party/LVGL
-    Middlewares/Third_Party/FreeRTOS
-    Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
+    Middlewares/Third_Party/FreeRTOS/Source/include
+    Middlewares/Third_Party/CMSIS/RTOS2/Include
 )
 
 # Link directories setup
