@@ -199,8 +199,7 @@ int main(void)
   lv_obj_t * label = lv_label_create(obj);
   lv_label_set_text(label, "Hello");
 
-  lv_obj_t * scr = lv_obj_create(NULL);
-  lv_screen_load(scr);
+  lv_screen_load(lv_scr_act());
 
   // lv_obj_t * flexCol1 = lv_obj_create(scr);
   // lv_obj_set_layout(flexCol1, LV_LAYOUT_FLEX);
