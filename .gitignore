@@ -16,3 +16,4 @@ _deps
 CMakeUserPresets.json
 .ccls-cache
 *.bin
+.ccls
