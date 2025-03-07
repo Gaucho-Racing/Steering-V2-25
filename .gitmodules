@@ -1,4 +1,0 @@
-[submodule "LVGL"]
-	path = Middlewares/Third_Party/LVGL/lvgl
-	url = ../../lvgl/lvgl.git
-	branch = release/v9.2
