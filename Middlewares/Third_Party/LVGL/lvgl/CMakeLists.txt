@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.12.4)
 
+# Custom addition for only the LVGL library
 add_compile_options(-Wno-unused)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
