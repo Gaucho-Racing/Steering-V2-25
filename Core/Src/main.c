@@ -170,12 +170,6 @@ int main(void)
   /* initialize display and touchscreen */
   lvgl_display_init();
 
-  // No touchscreen allowed :(
-  // lvgl_touchscreen_init();
-
-  /* lvgl demo */
-  lv_demo_widgets();
-
   /* Change Active Screen's background color */
   lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x003a57), LV_PART_MAIN);
   lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);

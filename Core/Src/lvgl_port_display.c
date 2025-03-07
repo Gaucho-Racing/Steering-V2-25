@@ -11,7 +11,7 @@
  *  STATIC PROTOTYPES
  **********************/
 
-static void disp_flush(lv_display_t *, const lv_area_t *, uint8_t *);
+static void disp_flush(lv_display_t *, const lv_area_t *, uint8_t *color_p);
 static void disp_flush_complete(DMA2D_HandleTypeDef *);
 
 /**********************
@@ -20,7 +20,7 @@ static void disp_flush_complete(DMA2D_HandleTypeDef *);
 
 static lv_display_t *display;
 
-static __attribute__((aligned(32))) lv_color_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];
+static uint16_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];
 
 /**********************
  *   GLOBAL FUNCTIONS
@@ -66,8 +66,7 @@ void lvgl_display_init(void)
  *   STATIC FUNCTIONS
  **********************/
 
-static void
-disp_flush(lv_display_t *drv,
+static void disp_flush(lv_display_t *drv,
            const lv_area_t *area,
            uint8_t *color_p)
 {
