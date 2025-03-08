@@ -161,6 +161,12 @@ int main(void)
   MX_FLASH_Init();
   /* USER CODE BEGIN 2 */
 
+
+  if (HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1) != HAL_OK) {
+    /* PWM Generation Error */
+    Error_Handler();
+  }
+
   /* reset display */
   HAL_GPIO_WritePin(LCD_DISP_RESET_GPIO_Port, LCD_DISP_RESET_Pin, GPIO_PIN_SET);
 
