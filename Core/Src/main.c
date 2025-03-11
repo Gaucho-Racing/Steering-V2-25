@@ -44,6 +44,7 @@
 #include "lvgl/lvgl.h"
 #include "lvgl/demos/lv_demos.h"
 #include "lvgl_port_display.h"
+#include "msgIDs.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -77,21 +78,21 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-SteerData constructStatus() {
-  SteerData data;
+SteeringStatusMsg constructStatus() {
+  SteeringStatusMsg data;
   data.buttonFlags =
-    (HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, Button1_Pin) << 7) |
-    (HAL_GPIO_ReadPin(BUTTON_2_GPIO_Port, Button2_Pin) << 6) |
-    (HAL_GPIO_ReadPin(BUTTON_3_GPIO_Port, Button3_Pin) << 5) | 
-    (HAL_GPIO_ReadPin(BUTTON_4_GPIO_Port, Button4_Pin) << 4);
+    (HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin) << 7) |
+    (HAL_GPIO_ReadPin(BUTTON_2_GPIO_Port, BUTTON_2_Pin) << 6) |
+    (HAL_GPIO_ReadPin(BUTTON_3_GPIO_Port, BUTTON_3_Pin) << 5) | 
+    (HAL_GPIO_ReadPin(BUTTON_4_GPIO_Port, BUTTON_4_Pin) << 4);
   // TODO: update encoder values for current, torque map, and regen encoders
 
   return data;
 }
 
 void sendStatus() {
-  SteerData status = constructStatus();
-  writeToECU(MSG_STEERING_STATUS, status.arr, 4);
+  SteeringStatusMsg status = constructStatus();
+  writeToECU(MSG_STEERING_STATUS, status, 4);
 }
 /* USER CODE END 0 */
 
