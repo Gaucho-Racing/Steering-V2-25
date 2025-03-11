@@ -36,7 +36,15 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+typedef union {
+  struct {
+    uint8_t currentEncoder;
+    uint8_t torqueMapEncoder;
+    uint8_t regenEncoder;
+    uint8_t buttonFlags;
+  };
+  uint8_t arr[4];
+} SteerData;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
