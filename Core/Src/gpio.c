@@ -78,6 +78,12 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : TME_P3_Pin TME_P2_Pin TME_P4_Pin */
+  GPIO_InitStruct.Pin = TME_P3_Pin|TME_P2_Pin|TME_P4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
   /*Configure GPIO pins : PD4 PD5 PD6 PD7
                            PD14 */
   GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7
@@ -85,6 +91,14 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : CME_P1_Pin RME_P4_Pin RME_P1_Pin BUTTON_1_Pin
+                           BUTTON_3_Pin BUTTON_4_Pin */
+  GPIO_InitStruct.Pin = CME_P1_Pin|RME_P4_Pin|RME_P1_Pin|BUTTON_1_Pin
+                          |BUTTON_3_Pin|BUTTON_4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PE4 PE1 PE5 PE2
                            PE15 */
@@ -104,12 +118,24 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : CME_P4_Pin CME_P3_Pin TME_P1_Pin */
+  GPIO_InitStruct.Pin = CME_P4_Pin|CME_P3_Pin|TME_P1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
   /*Configure GPIO pin : LCD_DISP_RESET_Pin */
   GPIO_InitStruct.Pin = LCD_DISP_RESET_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LCD_DISP_RESET_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : RME_P3_Pin RME_P2_Pin BUTTON_2_Pin */
+  GPIO_InitStruct.Pin = RME_P3_Pin|RME_P2_Pin|BUTTON_2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
 
   /*Configure GPIO pin : CTP_RST_Pin */
   GPIO_InitStruct.Pin = CTP_RST_Pin;
@@ -182,6 +208,12 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : CME_P2_Pin */
+  GPIO_InitStruct.Pin = CME_P2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(CME_P2_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : R_RST_Pin */
   GPIO_InitStruct.Pin = R_RST_Pin;
