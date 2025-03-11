@@ -45,6 +45,7 @@
 #include "usb_otg.h"
 #include "gpio.h"
 
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lvgl/lvgl.h"
