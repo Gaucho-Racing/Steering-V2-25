@@ -51,7 +51,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+// FIXME MUST ENABLE FDCAN CORRECTLY SOMEHOW
+// TODO BEFORE CODE IS FINALIZED PLEASE
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
