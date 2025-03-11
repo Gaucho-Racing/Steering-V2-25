@@ -54,6 +54,7 @@ target_include_directories(lvgl PUBLIC
     Drivers/STM32U5xx_HAL_Driver/Inc/Legacy
     Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/
     Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/
+    Application/Inc/
 )
 
 # Link directories setup
@@ -66,6 +67,9 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     Core/Src/lvgl_port_display.c
     Core/Src/mx25lm51245g.c
+    Application/Src/CANdler.c
+    Application/Src/pinging.c
+    Application/Src/utils.c
 )
 
 # Add include paths
