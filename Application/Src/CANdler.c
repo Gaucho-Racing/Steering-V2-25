@@ -2,8 +2,10 @@
 
 #include "CANdler.h"
 #include "msgIDs.h"
+#include "grIDs.h"
+#include "fdcan.h"
 
-volatile numberOfBadMessages = 0;
+volatile int numberOfBadMessages = 0;
 
 void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t length, uint32_t timestamp) {
     UNUSED(timestamp);
@@ -51,7 +53,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
     }
 }
 
-void writeToECU(uint16_t msgID, uint8_t data[], uint32_t len) {
+void writeToECU(uint16_t msgID, uint8_t* data, uint32_t len) {
     writeMessage(msgID, GR_ECU, data, len);
 }
 
