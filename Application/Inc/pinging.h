@@ -3,6 +3,7 @@
 #ifndef PINGING_H
 #define PINGING_H
 
+#define TICK_FREQ 1000
 #define PINGTIMEOUT 250 // timeout time for pings in ms
 #define PINGCOUNT 11
 

@@ -35,7 +35,7 @@ FDCAN_TxHeaderTypeDef TxHeader = {
 };
 
 void writeMessage(uint8_t bus, uint16_t msgID, uint8_t destID, uint8_t data[], uint32_t len) {
-  TxHeader.Identifier = (LOCAL_GR_ID << 20) | (msgID << 8) | destID;  // FIXME Unknown constant
+  TxHeader.Identifier = (LOCAL_GR_ID << 20) | (msgID << 8) | destID;
   TxHeader.DataLength = len;
 
   FDCAN_HandleTypeDef *handle;

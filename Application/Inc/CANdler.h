@@ -5,7 +5,7 @@
 
 #define LOCAL_GR_ID GR_STEERING_WHEEL
 
-extern int numberOfBadMessages;
+extern volatile int numberOfBadMessages;
 
 void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t length, uint32_t timestamp);
 

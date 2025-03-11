@@ -29,13 +29,13 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "grIDs.h"
 /* USER CODE END Includes */
 
 extern FDCAN_HandleTypeDef hfdcan1;
 
 /* USER CODE BEGIN Private defines */
-
+#define LOCAL_GR_ID GR_STEERING_WHEEL
 /* USER CODE END Private defines */
 
 void MX_FDCAN1_Init(void);
