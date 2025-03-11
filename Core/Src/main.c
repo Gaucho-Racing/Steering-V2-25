@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os2.h"
-#include "adc.h"
 #include "mdf.h"
 #include "cordic.h"
 #include "crc.h"
@@ -31,7 +30,6 @@
 #include "gtzc.h"
 #include "hash.h"
 #include "icache.h"
-#include "lptim.h"
 #include "ltdc.h"
 #include "memorymap.h"
 #include "octospi.h"
@@ -116,7 +114,6 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_ADC1_Init();
   MX_ADF1_Init();
   MX_CRC_Init();
   MX_DCACHE1_Init();
@@ -131,10 +128,7 @@ int main(void)
   MX_RNG_Init();
   MX_RTC_Init();
   MX_CORDIC_Init();
-  MX_LPTIM2_Init();
   MX_SPI2_Init();
-  MX_TIM3_Init();
-  MX_TIM5_Init();
   MX_TIM6_Init();
   MX_TIM8_Init();
   MX_TIM15_Init();
@@ -333,13 +327,11 @@ void SystemClock_Config(void)
 
   /** Initializes the CPU, AHB and APB buses clocks
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48|RCC_OSCILLATORTYPE_HSI
-                              |RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48|RCC_OSCILLATORTYPE_HSE
+                              |RCC_OSCILLATORTYPE_LSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS;
   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMBOOST = RCC_PLLMBOOST_DIV1;
@@ -370,10 +362,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-
-  /** MCO configuration
-  */
-  HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_SYSCLK, RCC_MCODIV_1);
 
   /** Enables the Clock Security System
   */
