@@ -23,7 +23,6 @@
 #include "mdf.h"
 #include "cordic.h"
 #include "crc.h"
-#include "dac.h"
 #include "dcache.h"
 #include "dma2d.h"
 #include "fdcan.h"
@@ -31,7 +30,6 @@
 #include "gpu2d.h"
 #include "gtzc.h"
 #include "hash.h"
-#include "i2c.h"
 #include "icache.h"
 #include "lptim.h"
 #include "ltdc.h"
@@ -41,8 +39,6 @@
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
-#include "usart.h"
-#include "usb_otg.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -75,7 +71,6 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void PeriphCommonClock_Config(void);
 static void SystemPower_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
@@ -112,9 +107,6 @@ int main(void)
 
   /* Configure the system clock */
   SystemClock_Config();
-
-  /* Configure the peripherals common clocks */
-  PeriphCommonClock_Config();
   /* GTZC initialisation */
   MX_GTZC_Init();
 
@@ -133,31 +125,19 @@ int main(void)
   MX_FDCAN1_Init();
   MX_GPU2D_Init();
   MX_HASH_Init();
-  MX_I2C1_Init();
-  MX_I2C2_Init();
   MX_ICACHE_Init();
   MX_LTDC_Init();
   MX_OCTOSPI1_Init();
   MX_RNG_Init();
   MX_RTC_Init();
-  MX_USB_OTG_HS_USB_Init();
-  MX_ADC2_Init();
   MX_CORDIC_Init();
-  MX_DAC1_Init();
-  MX_I2C4_Init();
   MX_LPTIM2_Init();
-  MX_SPI1_Init();
   MX_SPI2_Init();
-  MX_TIM1_Init();
   MX_TIM3_Init();
   MX_TIM5_Init();
   MX_TIM6_Init();
   MX_TIM8_Init();
   MX_TIM15_Init();
-  MX_USART1_UART_Init();
-  MX_USART2_UART_Init();
-  MX_USART3_UART_Init();
-  MX_USART6_UART_Init();
   MX_FLASH_Init();
   /* USER CODE BEGIN 2 */
 
@@ -354,15 +334,12 @@ void SystemClock_Config(void)
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48|RCC_OSCILLATORTYPE_HSI
-                              |RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE
-                              |RCC_OSCILLATORTYPE_LSE;
+                              |RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS;
   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
-  RCC_OscInitStruct.LSIDiv = RCC_LSI_DIV1;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMBOOST = RCC_PLLMBOOST_DIV1;
@@ -401,14 +378,6 @@ void SystemClock_Config(void)
   /** Enables the Clock Security System
   */
   HAL_RCCEx_EnableLSECSS();
-}
-
-/**
-  * @brief Peripherals Common Clock Configuration
-  * @retval None
-  */
-void PeriphCommonClock_Config(void)
-{
 }
 
 /**
