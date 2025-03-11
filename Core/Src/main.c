@@ -77,7 +77,22 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+SteerData constructStatus() {
+  SteerData data;
+  data.buttonFlags =
+    (HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, Button1_Pin) << 7) |
+    (HAL_GPIO_ReadPin(BUTTON_2_GPIO_Port, Button2_Pin) << 6) |
+    (HAL_GPIO_ReadPin(BUTTON_3_GPIO_Port, Button3_Pin) << 5) | 
+    (HAL_GPIO_ReadPin(BUTTON_4_GPIO_Port, Button4_Pin) << 4);
+  // TODO: update encoder values for current, torque map, and regen encoders
 
+  return data;
+}
+
+void sendStatus() {
+  SteerData status = constructStatus();
+  writeToECU(MSG_STEERING_STATUS, status.arr, 4);
+}
 /* USER CODE END 0 */
 
 /**
@@ -151,8 +166,8 @@ int main(void)
   lvgl_display_init();
   
   /* Change Active Screen's background color */
-  // lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x003a57), LV_PART_MAIN);
-  // lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
+  lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0xff0000), LV_PART_MAIN);
+  lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
 
   // /* Create a spinner */
   // lv_obj_t * spinner = lv_spinner_create(lv_screen_active()/*, 1000, 60*/);
