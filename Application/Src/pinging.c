@@ -33,10 +33,10 @@ void pingSchedule(void)
     // check for timed out pings
     for(int i = 0; i < PINGCOUNT; i++) {
         if(!pingHasReturned[i]) {
-            pingTimes[i] = PINGTIMEOUT*(TICK_FREQ/1000);    // FIXME NOT SURE WHERE CONSTANT FROM
-            // FIXME IDK
+            pingTimes[i] = PINGTIMEOUT*(TICK_FREQ/1000);
+            // FIXME IDK HOW WE WANT TO HANDLE THIS
         } else {
-            // FIXME IDK
+            // FIXME IDK HOW WE WANT TO HANDLE THIS
         }
 
         pingHasReturned[i] = false;
