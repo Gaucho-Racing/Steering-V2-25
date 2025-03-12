@@ -81,7 +81,7 @@ void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN 0 */
 SteeringStatusMsg constructStatus() {
   SteeringStatusMsg data;
-  data.buttonFlags =
+  data.buttonMap = 0 |
     (HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin) << 7) |
     (HAL_GPIO_ReadPin(BUTTON_2_GPIO_Port, BUTTON_2_Pin) << 6) |
     (HAL_GPIO_ReadPin(BUTTON_3_GPIO_Port, BUTTON_3_Pin) << 5) | 
@@ -93,7 +93,7 @@ SteeringStatusMsg constructStatus() {
 
 void sendStatus() {
   SteeringStatusMsg status = constructStatus();
-  writeToECU(MSG_STEERING_STATUS, status, 4);
+  writeToECU(MSG_STEERING_STATUS, (uint8_t *) &status, 3);
 }
 /* USER CODE END 0 */
 

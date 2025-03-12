@@ -41,7 +41,8 @@ extern FDCAN_HandleTypeDef hfdcan1;
 void MX_FDCAN1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void writeToECU(uint16_t msgID, uint8_t data[], uint32_t len);
+void writeMessage(uint16_t msgID, uint8_t destID, uint8_t data[], uint32_t len);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
