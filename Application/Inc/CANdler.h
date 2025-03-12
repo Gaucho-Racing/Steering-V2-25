@@ -2,6 +2,7 @@
 #define CANDLER_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define LOCAL_GR_ID GR_STEERING_WHEEL
 
@@ -17,6 +18,7 @@ typedef struct {
 
 // EMTPY FOR NOW
 typedef struct {
+    bool DONOTUSE;
 } SteeringConfigMsg;
 
 typedef struct {

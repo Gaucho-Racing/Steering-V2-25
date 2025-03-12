@@ -46,11 +46,13 @@
 #include "lvgl_port_display.h"
 #include "msgIDs.h"
 #include "CANdler.h"
+#include "grIDs.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+// FIXME MUST ENABLE FDCAN CORRECTLY SOMEHOW
+// TODO BEFORE CODE IS FINALIZED PLEASE
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -93,7 +95,7 @@ SteeringStatusMsg constructStatus() {
 
 void sendStatus() {
   SteeringStatusMsg status = constructStatus();
-  writeToECU(MSG_STEERING_STATUS, (uint8_t *) &status, 3);
+  writeToECU(MSG_STEERING_STATUS, (uint8_t*)(&status), 4);
 }
 /* USER CODE END 0 */
 

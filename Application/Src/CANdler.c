@@ -3,7 +3,6 @@
 #include "CANdler.h"
 #include "fdcan.h"
 #include "msgIDs.h"
-#include "stm32u5xx_hal.h"
 
 volatile int numberOfBadMessages = 0;
 
