@@ -12,4 +12,4 @@ ninja
 ```
 
 ## Install
-See [ECU-25](https://github.com/Gaucho-Racing/ECU-25) or [Dash-Panel-V2-25](https://github.com/Gaucho-Racing/Dash-Panel-V2-25/) for a likely install chain.
+See [ECU-25](https://github.com/Gaucho-Racing/ECU-25) for a likely install chain.
