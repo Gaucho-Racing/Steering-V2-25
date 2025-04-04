@@ -21,7 +21,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
                 numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
             }
 
-            strncpy(IncomingData.debugMessage, (char*)data, length);
+            strncpy(incomingData.debugMessage, (char*)data, length);
 
             break;
         case MSG_STEERING_CONFIG:

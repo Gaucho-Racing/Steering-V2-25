@@ -5,6 +5,10 @@
 #include "CANdler.h"
 #include "grIDs.h"
 #include "steering.h"
+#include "main.h"
+#include "fdcan.h"
+#include "stm32u5xx_hal.h"
+#include "tim.h"
 
 volatile IncomingData incomingData = {0};
 
