@@ -29,7 +29,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
                 numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
             }
             
-            writeMessage(MSG_PING, srcID, data, length);
+            writeMessage(MSG_PING, srcID, data, length);    // Right back at you buckaroo
 
         case MSG_STEERING_CONFIG:
             // RESERVED
