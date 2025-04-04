@@ -24,7 +24,8 @@
 #include "CANdler.h"
 #include <stdint.h>
 
-void writeToECU(uint16_t msgID, uint8_t data[], uint32_t len) {
+void writeToECU(uint16_t msgID, uint8_t data[], uint32_t len)
+{
   writeMessage(msgID, GR_ECU, data, len);
 }
 
@@ -38,7 +39,8 @@ FDCAN_TxHeaderTypeDef TxHeader = {
   .MessageMarker = 0 // also change this to a real address if you change fifo control
 };
 
-void writeMessage(uint16_t msgID, uint8_t destID, uint8_t data[], uint32_t len) {
+void writeMessage(uint16_t msgID, uint8_t destID, uint8_t data[], uint32_t len)
+{
   TxHeader.Identifier = (LOCAL_GR_ID << 20) | (msgID << 8) | destID;
   TxHeader.DataLength = len;
 
@@ -55,15 +57,17 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
   static FDCAN_RxHeaderTypeDef RxHeader;
   static uint8_t RxData[64];
   if((RxFifo0ITs & FDCAN_IT_RX_FIFO0_NEW_MESSAGE) != RESET) {
-      if(HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO1, &RxHeader, RxData) != HAL_OK) {
+      if(HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO1, &RxHeader, RxData) != HAL_OK)
+      {
           Error_Handler();
       }
 
       uint16_t msgID = (RxHeader.Identifier & 0x00FFF00) >> 8;
       uint8_t srcID  = (RxHeader.Identifier & 0xFF00000) >> 20;
-      handleCANMessage(msgID, srcID, RxData, RxHeader.DataLength, RxHeader.RxTimestamp);
+      handleCANMessage(msgID, srcID, RxData, RxHeader.DataLength);  // Can readd timestamp if needed
 
-      if(HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK) {
+      if(HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
+      {
           Error_Handler();
       }
   }

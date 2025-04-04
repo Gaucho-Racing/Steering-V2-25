@@ -68,7 +68,6 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/lvgl_port_display.c
     Core/Src/mx25lm51245g.c
     Application/Src/CANdler.c
-    Application/Src/pinging.c
     Application/Src/utils.c
     Application/Src/steering.c
     Application/Src/gui.c

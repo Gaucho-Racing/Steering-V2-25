@@ -8,10 +8,7 @@
 
 volatile int numberOfBadMessages = 0;
 
-void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t length, uint32_t timestamp) {
-    UNUSED(timestamp);
-    UNUSED(srcID);
-
+void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t length) {
     switch(msgID) {
         case MSG_DEBUG_FD:
             if (length > 64) {
@@ -24,6 +21,16 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
             strncpy((char*)incomingData.debugMessage, (char*)data, length);
 
             break;
+        case MSG_PING:
+            if (length != 4) {
+                numberOfBadMessages++;
+                return;
+            } else {
+                numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
+            }
+            
+            writeMessage(MSG_PING, srcID, data, length);
+
         case MSG_STEERING_CONFIG:
             // RESERVED
             break;
