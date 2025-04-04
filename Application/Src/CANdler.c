@@ -21,7 +21,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
                 numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
             }
 
-            strncpy(incomingData.debugMessage, (char*)data, length);
+            strncpy((char*)incomingData.debugMessage, (char*)data, length);
 
             break;
         case MSG_STEERING_CONFIG:
@@ -35,7 +35,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
                 numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
             }
 
-            memcpy(incomingData.cellData, data, length);
+            memcpy((char*)incomingData.cellData, data, length);
 
             break;
         case MSG_ACU_CELL_DATA_2:
@@ -46,7 +46,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
                 numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
             }
 
-            memcpy(incomingData.cellData + length, data, length);
+            memcpy((char*)incomingData.cellData + length, data, length);
 
             break;
         case MSG_ACU_CELL_DATA_3:
@@ -57,7 +57,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
                 numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
             }
 
-            memcpy(incomingData.cellData + 2 * length, data, length);
+            memcpy((char*)incomingData.cellData + 2 * length, data, length);
 
             break;
         case MSG_ACU_CELL_DATA_4:
@@ -68,7 +68,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
                 numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
             }
 
-            memcpy(incomingData.cellData + 3 * length, data, length);
+            memcpy((char*)incomingData.cellData + 3 * length, data, length);
 
             break;
         case MSG_ACU_CELL_DATA_5:
@@ -79,7 +79,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
                 numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
             }
 
-            memcpy(incomingData.cellData + 4 * length, data, length);
+            memcpy((char*)incomingData.cellData + 4 * length, data, length);
 
             break;
     }
