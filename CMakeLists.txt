@@ -70,6 +70,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Application/Src/CANdler.c
     Application/Src/pinging.c
     Application/Src/utils.c
+    Application/Src/steering.c
 )
 
 # Add include paths
