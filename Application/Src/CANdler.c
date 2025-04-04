@@ -1,8 +1,10 @@
 #include <stdint.h>
+#include <string.h>
 
 #include "CANdler.h"
 #include "fdcan.h"
 #include "msgIDs.h"
+#include "steering.h"
 
 volatile int numberOfBadMessages = 0;
 
@@ -19,35 +21,66 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
                 numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
             }
 
-            char* debug2String = (char*)data;
-            UNUSED(debug2String);
+            strncpy(IncomingData.debugMessage, (char*)data, length);
 
             break;
         case MSG_STEERING_CONFIG:
             // RESERVED
             break;
-        case MSG_TCM_STATUS:
-            if (length != 8) {
+        case MSG_ACU_CELL_DATA_1:
+            if (length != 64) {
                 numberOfBadMessages++;
                 return;
             } else {
                 numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
             }
 
-            TCMStatusMsg* tcmStatusMsg = (TCMStatusMsg*)data;
-            UNUSED(tcmStatusMsg);
+            memcpy(data, incomingData.cellData, length);
 
             break;
-        case MSG_TCM_RESOURCE_UTILIZATION:
-            if (length != 7) {
+        case MSG_ACU_CELL_DATA_2:
+            if (length != 64) {
                 numberOfBadMessages++;
                 return;
             } else {
                 numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
             }
 
-            TCMResourceUtilizationMsg* tcmResUtilMsg = (TCMResourceUtilizationMsg*)data;
-            UNUSED(tcmResUtilMsg);
+            memcpy(data + length, incomingData.cellData, length);
+
+            break;
+        case MSG_ACU_CELL_DATA_3:
+            if (length != 64) {
+                numberOfBadMessages++;
+                return;
+            } else {
+                numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
+            }
+
+            memcpy(data + 2 * length, incomingData.cellData, length);
+
+            break;
+        case MSG_ACU_CELL_DATA_4:
+            if (length != 64) {
+                numberOfBadMessages++;
+                return;
+            } else {
+                numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
+            }
+
+            memcpy(data + 3 * length, incomingData.cellData, length);
+
+            break;
+        case MSG_ACU_CELL_DATA_5:
+            if (length != 64) {
+                numberOfBadMessages++;
+                return;
+            } else {
+                numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
+            }
+
+            memcpy(data + 4 * length, incomingData.cellData, length);
+
             break;
     }
 }
