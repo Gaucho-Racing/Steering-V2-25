@@ -42,6 +42,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "steering.h"
+#include "lvgl/lvgl.h"
+#include "lvgl/demos/lv_demos.h"
+#include "lvgl_port_display.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -132,7 +135,19 @@ int main(void)
   MX_TIM15_Init();
   MX_FLASH_Init();
   /* USER CODE BEGIN 2 */
-  initLVGL();
+  if (HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1) != HAL_OK) {
+    /* PWM Generation Error */
+    Error_Handler();
+  }
+
+  /* reset display */
+  HAL_GPIO_WritePin(LCD_DISP_RESET_GPIO_Port, LCD_DISP_RESET_Pin, GPIO_PIN_SET);
+
+  /* initialize LVGL framework */
+  lv_init();
+
+  /* initialize display and touchscreen */
+  lvgl_display_init();
   /* USER CODE END 2 */
 
   /* Init scheduler */

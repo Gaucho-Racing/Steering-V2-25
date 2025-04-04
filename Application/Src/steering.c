@@ -32,21 +32,8 @@ void sendStatus() {
 
 lv_obj_t* cells[160];
 
-void initLVGL() {
-  if (HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1) != HAL_OK) {
-    /* PWM Generation Error */
-    Error_Handler();
-  }
-
-  /* reset display */
-  HAL_GPIO_WritePin(LCD_DISP_RESET_GPIO_Port, LCD_DISP_RESET_Pin, GPIO_PIN_SET);
-
-  /* initialize LVGL framework */
-  lv_init();
-
-  /* initialize display and touchscreen */
-  lvgl_display_init();
-  
+void initLVGL()
+{
   /* Change Active Screen's background color */
   lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0xff0000), LV_PART_MAIN);
   lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
