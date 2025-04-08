@@ -18,6 +18,10 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_compile_definitions(LOGOMATIC_ENABLED)
+endif()
+
 # Set the project name
 set(CMAKE_PROJECT_NAME dashPanel25)
 
@@ -82,6 +86,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add project symbols (macros)
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined symbols
+    LOGOMATIC_ENABLED
 )
 
 # Add linked libraries
