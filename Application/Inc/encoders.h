@@ -17,5 +17,5 @@
 
     extern volatile EncoderPercentages globalEncoderPercentages;
 
-    uint16_t getStatus(Encoder encoder);
+    void pollEncoderStatus(Encoder encoder);
 #endif

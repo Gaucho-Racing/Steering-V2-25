@@ -14,6 +14,6 @@ typedef struct {
 } IncomingData;
 
 extern volatile IncomingData incomingData;
-
+void sendStatus();
 void initLVGL();
 #endif

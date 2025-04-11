@@ -18,7 +18,7 @@ SteeringStatusMsg constructStatus()
 {
     SteeringStatusMsg data;
 
-    data.CMEandTME = 0 (globalEncoderPercentages.current << 4) | globalEncoderPercentages.torque;
+    data.CMEandTME = (globalEncoderPercentages.current << 4) | globalEncoderPercentages.torque;
     data.RMEandButtonMap = 0 |
       (globalEncoderPercentages.regen << 4) |
       (HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin) << 3) |

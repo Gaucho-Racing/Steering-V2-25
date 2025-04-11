@@ -215,17 +215,17 @@ void LVGLTick(void *argument)
   UNUSED(argument);
 }
 
-const POLL_DELAY = 30 / 3;
+const uint32_t POLL_DELAY = 30 / 3;
 /* poll pins */
 void PinPoll(void *argument)
 {
   for(;;)
   {
-    pollEnoderStatus(ENC_CURRENT);
+    pollEncoderStatus(ENC_CURRENT);
     osDelay(POLL_DELAY);
-    pollEnoderStatus(ENC_TORQUE);
+    pollEncoderStatus(ENC_TORQUE);
     osDelay(POLL_DELAY);
-    pollEnoderStatus(ENC_REGEN);
+    pollEncoderStatus(ENC_REGEN);
     osDelay(POLL_DELAY);
   }
   UNUSED(argument);
