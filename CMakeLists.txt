@@ -75,6 +75,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Application/Src/utils.c
     Application/Src/steering.c
     Application/Src/gui.c
+    Application/Src/encoders.c
 )
 
 # Add include paths
