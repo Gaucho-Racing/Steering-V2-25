@@ -1,6 +1,7 @@
 #include <stdint.h>
 
 #include "encoders.h"
+#include "steering.h"
 #include "main.h"
 #include "stm32u5xx_hal.h"
 
@@ -10,39 +11,75 @@ typedef struct {
     uint8_t torque;
 } EncoderPositions;
 
-EncoderPositions percentage = {0};
-EncoderPositions startingAbsolutePosition = {0};
+volatile EncoderPercentages globalEncoderPercentages = {0};
 
-uint16_t getStatus(Encoder encoder)
+void pollEncoderStatus(Encoder encoder)
 {
     uint8_t value = 0;
+
     switch(encoder) {
         case ENC_CURRENT:
             value = (HAL_GPIO_ReadPin(CME_P1_GPIO_Port, CME_P1_Pin) << 3) | (HAL_GPIO_ReadPin(CME_P2_GPIO_Port, CME_P2_Pin) << 2) | (HAL_GPIO_ReadPin(CME_P3_GPIO_Port, CME_P3_Pin) << 1) | HAL_GPIO_ReadPin(RME_P4_GPIO_Port, RME_P4_Pin);
+            break;
         case ENC_REGEN:
             value = (HAL_GPIO_ReadPin(RME_P1_GPIO_Port, RME_P1_Pin) << 3) | (HAL_GPIO_ReadPin(RME_P2_GPIO_Port, RME_P2_Pin) << 2) | (HAL_GPIO_ReadPin(RME_P3_GPIO_Port, RME_P3_Pin) << 1) | HAL_GPIO_ReadPin(RME_P4_GPIO_Port, RME_P4_Pin);
+            break;
         case ENC_TORQUE:
             value = (HAL_GPIO_ReadPin(TME_P1_GPIO_Port, TME_P1_Pin) << 3) | (HAL_GPIO_ReadPin(TME_P2_GPIO_Port, TME_P2_Pin) << 2) | (HAL_GPIO_ReadPin(TME_P3_GPIO_Port, TME_P3_Pin) << 1) | HAL_GPIO_ReadPin(TME_P4_GPIO_Port, TME_P4_Pin);
     }
 
-    uint8_t sketchyPercentage = 0;
-
     switch (value) {
         case 0x0:       // 0 deg
-            return 0x0; // 00.0%
+            value = 0x0; // 00.0%
+            break;
         case 0x4:       // 45 deg
-            return 0x2; // 13.3%
+            value = 0x2; // 13.3%
+            break;
         case 0xC:       // 90 deg
-            return 0x4; // 26.6%
+            value = 0x4; // 26.6%
+            break;
         case 0xE:       // 135 deg
-            return 0x6; // 40.0%
+            value = 0x6; // 40.0%
+            break;
         case 0x6:       // 180 deg
-            return 0x8; // 53.3%
+            value = 0x8; // 53.3%
+            break;
         case 0x7:       // 225 deg
-            return 0xB; // 73.3%
+            value = 0xB; // 73.3%
+            break;
         case 0x3:       // 270 deg
-            return 0xD; // 86.6%
+            value = 0xD; // 86.6%
+            break;
         case 0x2:       // 315 deg
-            return 0xF; // 100%
+            value = 0xF; // 100%
+    }
+
+    switch(encoder) {
+        case ENC_CURRENT:
+            if (globalEncoderPercentages.current != value)
+            {
+                globalEncoderPercentages.current = value;
+                sendStatus();
+            }
+
+            break;
+
+        case ENC_REGEN:
+            if (globalEncoderPercentages.regen != value)
+            {
+                globalEncoderPercentages.current = value;
+                sendStatus();
+            }
+
+            break;
+
+        case ENC_TORQUE:
+            if (globalEncoderPercentages.torque != value)
+            {
+                globalEncoderPercentages.torque = value;
+                sendStatus();
+            }
+
+            break;
     }
 }

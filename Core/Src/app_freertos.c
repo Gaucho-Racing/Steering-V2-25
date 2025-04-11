@@ -25,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lvgl/lvgl.h"
+#include "encoders.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,6 +58,14 @@ const osThreadAttr_t lvglTimer_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 4* 1024
 };
+
+osThreadId_t pinPollHandle;
+const osThreadAttr_t pinPoll_attributes = {
+  .name = "pinPoll",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 4* 1024
+};
+
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -70,6 +79,7 @@ const osThreadAttr_t defaultTask_attributes = {
 /* USER CODE BEGIN FunctionPrototypes */
 void LVGLTimer(void *argument);
 void LVGLTick(void *argument);
+void PinPoll(void *argument);
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
@@ -155,6 +165,7 @@ void MX_FREERTOS_Init(void) {
   /* add threads, ... */
   lvglTickHandle = osThreadNew(LVGLTick, NULL, &lvglTick_attributes);
   lvglTimerHandle = osThreadNew(LVGLTimer, NULL, &lvglTimer_attributes);
+  pinPollHandle = osThreadNew(PinPoll, NULL, &pinPoll_attributes);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -200,6 +211,22 @@ void LVGLTick(void *argument)
   {
     lv_tick_inc(10);
     osDelay(10);
+  }
+  UNUSED(argument);
+}
+
+const POLL_DELAY = 30 / 3;
+/* poll pins */
+void PinPoll(void *argument)
+{
+  for(;;)
+  {
+    pollEnoderStatus(ENC_CURRENT);
+    osDelay(POLL_DELAY);
+    pollEnoderStatus(ENC_TORQUE);
+    osDelay(POLL_DELAY);
+    pollEnoderStatus(ENC_REGEN);
+    osDelay(POLL_DELAY);
   }
   UNUSED(argument);
 }

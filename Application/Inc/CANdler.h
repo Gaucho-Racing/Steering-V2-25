@@ -12,8 +12,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
 
 typedef struct {
     uint8_t CMEandTME;
-    uint8_t RME;
-    uint8_t buttonMap;
+    uint8_t RMEandButtonMap;
 } SteeringStatusMsg;
 
 // EMTPY FOR NOW

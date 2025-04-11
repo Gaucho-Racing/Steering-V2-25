@@ -10,8 +10,12 @@
     } Encoder;
 
     typedef struct {
-        uint
-    } encoderPercentages;
+        uint8_t current;
+        uint8_t torque;
+        uint8_t regen;
+    } EncoderPercentages;
+
+    extern volatile EncoderPercentages globalEncoderPercentages;
 
     uint16_t getStatus(Encoder encoder);
 #endif
