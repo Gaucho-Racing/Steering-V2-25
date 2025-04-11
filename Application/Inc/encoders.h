@@ -14,5 +14,4 @@
     } encoderPercentages;
 
     uint16_t getStatus(Encoder encoder);
-    void pollEncoderDials(void);
 #endif
