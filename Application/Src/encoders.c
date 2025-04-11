@@ -18,14 +18,18 @@ void pollEncoderStatus(Encoder encoder)
                 (HAL_GPIO_ReadPin(CME_P2_GPIO_Port, CME_P2_Pin) << 2) |
                 (HAL_GPIO_ReadPin(CME_P3_GPIO_Port, CME_P3_Pin) << 1) |
                 HAL_GPIO_ReadPin(RME_P4_GPIO_Port, RME_P4_Pin);
+
             break;
+
         case ENC_REGEN:
             value = 0 |
                 (HAL_GPIO_ReadPin(RME_P1_GPIO_Port, RME_P1_Pin) << 3) |
                 (HAL_GPIO_ReadPin(RME_P2_GPIO_Port, RME_P2_Pin) << 2) |
                 (HAL_GPIO_ReadPin(RME_P3_GPIO_Port, RME_P3_Pin) << 1) |
                 HAL_GPIO_ReadPin(RME_P4_GPIO_Port, RME_P4_Pin);
+
             break;
+
         case ENC_TORQUE:
             value = 0 |
                 (HAL_GPIO_ReadPin(TME_P1_GPIO_Port, TME_P1_Pin) << 3) |
@@ -39,24 +43,31 @@ void pollEncoderStatus(Encoder encoder)
         case 0x0:        // 0 deg
             value = 0x0; // 00.0%
             break;
+
         case 0x4:        // 45 deg
             value = 0x2; // 13.3%
             break;
+
         case 0xC:        // 90 deg
             value = 0x4; // 26.6%
             break;
+
         case 0xE:        // 135 deg
             value = 0x6; // 40.0%
             break;
+
         case 0x6:        // 180 deg
             value = 0x8; // 53.3%
             break;
+
         case 0x7:        // 225 deg
             value = 0xB; // 73.3%
             break;
+
         case 0x3:        // 270 deg
             value = 0xD; // 86.6%
             break;
+
         case 0x2:        // 315 deg
             value = 0xF; // 100%
     }
