@@ -29,20 +29,20 @@ uint16_t getStatus(Encoder encoder)
 
     switch (value) {
         case 0x0:   // 0 deg
-            return 0;  // 00.0%
+            return 0x0;  // 00.0%
         case 0x4:   // 45 deg
-            return 2;  // 13.3%
+            return 0x2;  // 13.3%
         case 0xC:   // 90 deg
-            return 4;  // 26.6%
+            return 0x4;  // 26.6%
         case 0xE:   // 135 deg
-            return 6;  // 40.0%
+            return 0x6;  // 40.0%
         case 0x6:   // 180 deg
-            return 8;  // 53.3%
+            return 0x8;  // 53.3%
         case 0x7:   // 225 deg
-            return 11; // 73.3%
+            return 0xB; // 73.3%
         case 0x3:   // 270 deg
-            return 13; // 86.6%
+            return 0xD; // 86.6%
         case 0x2:   // 315 deg
-            return 15; // 100%
+            return 0xF; // 100%
     }
 }
