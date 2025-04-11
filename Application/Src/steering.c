@@ -19,6 +19,7 @@ SteeringStatusMsg constructStatus()
     SteeringStatusMsg data;
 
     data.CMEandTME = (globalEncoderPercentages.current << 4) | globalEncoderPercentages.torque;
+
     data.RMEandButtonMap = 0 |
       (globalEncoderPercentages.regen << 4) |
       (HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin) << 3) |
@@ -29,7 +30,8 @@ SteeringStatusMsg constructStatus()
     return data;
 }
   
-void sendStatus() {
+void sendStatus()
+{
     SteeringStatusMsg status = constructStatus();
     writeToECU(MSG_STEERING_STATUS, (uint8_t*)(&status), 4);
 }
