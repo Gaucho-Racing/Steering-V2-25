@@ -147,6 +147,7 @@ int main(void)
 
   /* initialize display and touchscreen */
   lvgl_display_init();
+  initLVGL();
   /* USER CODE END 2 */
 
   /* Init scheduler */
