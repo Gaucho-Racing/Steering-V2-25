@@ -18,38 +18,31 @@ uint16_t getStatus(Encoder encoder)
     uint8_t value = 0;
     switch(encoder) {
         case ENC_CURRENT:
-            value = HAL_GPIO_ReadPin(CME_P1_GPIO_Port, CME_P1_Pin) | (HAL_GPIO_ReadPin(CME_P2_GPIO_Port, CME_P2_Pin) << 1) | (HAL_GPIO_ReadPin(CME_P3_GPIO_Port, CME_P3_Pin) << 2) | (HAL_GPIO_ReadPin(RME_P4_GPIO_Port, RME_P4_Pin) << 3);
+            value = (HAL_GPIO_ReadPin(CME_P1_GPIO_Port, CME_P1_Pin) << 3) | (HAL_GPIO_ReadPin(CME_P2_GPIO_Port, CME_P2_Pin) << 2) | (HAL_GPIO_ReadPin(CME_P3_GPIO_Port, CME_P3_Pin) << 1) | HAL_GPIO_ReadPin(RME_P4_GPIO_Port, RME_P4_Pin);
         case ENC_REGEN:
-            value = HAL_GPIO_ReadPin(RME_P1_GPIO_Port, RME_P1_Pin) | (HAL_GPIO_ReadPin(RME_P2_GPIO_Port, RME_P2_Pin) << 1) | (HAL_GPIO_ReadPin(RME_P3_GPIO_Port, RME_P3_Pin) << 2) | (HAL_GPIO_ReadPin(RME_P4_GPIO_Port, RME_P4_Pin) << 3);
+            value = (HAL_GPIO_ReadPin(RME_P1_GPIO_Port, RME_P1_Pin) << 3) | (HAL_GPIO_ReadPin(RME_P2_GPIO_Port, RME_P2_Pin) << 2) | (HAL_GPIO_ReadPin(RME_P3_GPIO_Port, RME_P3_Pin) << 1) | HAL_GPIO_ReadPin(RME_P4_GPIO_Port, RME_P4_Pin);
         case ENC_TORQUE:
-            value = HAL_GPIO_ReadPin(TME_P1_GPIO_Port, TME_P1_Pin) | (HAL_GPIO_ReadPin(TME_P2_GPIO_Port, TME_P2_Pin) << 1) | (HAL_GPIO_ReadPin(TME_P3_GPIO_Port, TME_P3_Pin) << 2) | (HAL_GPIO_ReadPin(TME_P4_GPIO_Port, TME_P4_Pin) << 3);
+            value = (HAL_GPIO_ReadPin(TME_P1_GPIO_Port, TME_P1_Pin) << 3) | (HAL_GPIO_ReadPin(TME_P2_GPIO_Port, TME_P2_Pin) << 2) | (HAL_GPIO_ReadPin(TME_P3_GPIO_Port, TME_P3_Pin) << 1) | HAL_GPIO_ReadPin(TME_P4_GPIO_Port, TME_P4_Pin);
     }
 
     uint8_t sketchyPercentage = 0;
 
     switch (value) {
         case 0x0:   // 0 deg
-            sketchyPercentage = 0;  // 00.0%
+            return 0;  // 00.0%
         case 0x4:   // 45 deg
-            sketchyPercentage = 2;  // 13.3%
-            break;
+            return 2;  // 13.3%
         case 0xC:   // 90 deg
-            sketchyPercentage = 4;  // 26.6%
-            break;
+            return 4;  // 26.6%
         case 0xE:   // 135 deg
-            sketchyPercentage = 6;  // 40.0%
-            break;
+            return 6;  // 40.0%
         case 0x6:   // 180 deg
-            sketchyPercentage = 8;  // 53.3%
-            break;
+            return 8;  // 53.3%
         case 0x7:   // 225 deg
-            sketchyPercentage = 11; // 73.3%
-            break;
+            return 11; // 73.3%
         case 0x3:   // 270 deg
-            sketchyPercentage = 13; // 86.6%
-            break;
+            return 13; // 86.6%
         case 0x2:   // 315 deg
-            sketchyPercentage = 15; // 100%
-            break;
+            return 15; // 100%
     }
 }
