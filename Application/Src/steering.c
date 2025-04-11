@@ -8,19 +8,23 @@
 #include "main.h"
 #include "fdcan.h"
 #include "stm32u5xx_hal.h"
+#include "encoders.h"
 #include "tim.h"
 #include "gui.h"
 
 volatile IncomingData incomingData = {0};
 
-SteeringStatusMsg constructStatus() {
+SteeringStatusMsg constructStatus()
+{
     SteeringStatusMsg data;
-    data.buttonMap = 0 |
-      (HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin) << 7) |
-      (HAL_GPIO_ReadPin(BUTTON_2_GPIO_Port, BUTTON_2_Pin) << 6) |
-      (HAL_GPIO_ReadPin(BUTTON_3_GPIO_Port, BUTTON_3_Pin) << 5) | 
-      (HAL_GPIO_ReadPin(BUTTON_4_GPIO_Port, BUTTON_4_Pin) << 4);
-    // TODO: update encoder values for current, torque map, and regen encoders
+
+    data.CMEandTME = 0 (globalEncoderPercentages.current << 4) | globalEncoderPercentages.torque;
+    data.RMEandButtonMap = 0 |
+      (globalEncoderPercentages.regen << 4) |
+      (HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin) << 3) |
+      (HAL_GPIO_ReadPin(BUTTON_2_GPIO_Port, BUTTON_2_Pin) << 2) |
+      (HAL_GPIO_ReadPin(BUTTON_3_GPIO_Port, BUTTON_3_Pin) << 1) | 
+      HAL_GPIO_ReadPin(BUTTON_4_GPIO_Port, BUTTON_4_Pin);
 
     return data;
 }
