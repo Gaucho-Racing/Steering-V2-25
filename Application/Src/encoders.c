@@ -28,21 +28,21 @@ uint16_t getStatus(Encoder encoder)
     uint8_t sketchyPercentage = 0;
 
     switch (value) {
-        case 0x0:   // 0 deg
-            return 0x0;  // 00.0%
-        case 0x4:   // 45 deg
-            return 0x2;  // 13.3%
-        case 0xC:   // 90 deg
-            return 0x4;  // 26.6%
-        case 0xE:   // 135 deg
-            return 0x6;  // 40.0%
-        case 0x6:   // 180 deg
-            return 0x8;  // 53.3%
-        case 0x7:   // 225 deg
+        case 0x0:       // 0 deg
+            return 0x0; // 00.0%
+        case 0x4:       // 45 deg
+            return 0x2; // 13.3%
+        case 0xC:       // 90 deg
+            return 0x4; // 26.6%
+        case 0xE:       // 135 deg
+            return 0x6; // 40.0%
+        case 0x6:       // 180 deg
+            return 0x8; // 53.3%
+        case 0x7:       // 225 deg
             return 0xB; // 73.3%
-        case 0x3:   // 270 deg
+        case 0x3:       // 270 deg
             return 0xD; // 86.6%
-        case 0x2:   // 315 deg
+        case 0x2:       // 315 deg
             return 0xF; // 100%
     }
 }
