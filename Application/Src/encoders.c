@@ -11,7 +11,8 @@ void pollEncoderStatus(Encoder encoder)
 {
     uint8_t value = 0;
 
-    switch(encoder) {
+    switch(encoder)
+    {
         case ENC_CURRENT:
             value = 0 |
                 (HAL_GPIO_ReadPin(CME_P1_GPIO_Port, CME_P1_Pin) << 3) |
