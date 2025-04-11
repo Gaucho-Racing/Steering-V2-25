@@ -25,10 +25,31 @@ uint16_t getStatus(Encoder encoder)
             value = HAL_GPIO_ReadPin(TME_P1_GPIO_Port, TME_P1_Pin) | (HAL_GPIO_ReadPin(TME_P2_GPIO_Port, TME_P2_Pin) << 1) | (HAL_GPIO_ReadPin(TME_P3_GPIO_Port, TME_P3_Pin) << 2) | (HAL_GPIO_ReadPin(TME_P4_GPIO_Port, TME_P4_Pin) << 3);
     }
 
+    uint8_t sketchyPercentage = 0;
+
     switch (value) {
         case 0x0:   // 0 deg
-            break;
+            sketchyPercentage = 0;  // 00.0%
         case 0x4:   // 45 deg
+            sketchyPercentage = 2;  // 13.3%
+            break;
+        case 0xC:   // 90 deg
+            sketchyPercentage = 4;  // 26.6%
+            break;
+        case 0xE:   // 135 deg
+            sketchyPercentage = 6;  // 40.0%
+            break;
+        case 0x6:   // 180 deg
+            sketchyPercentage = 8;  // 53.3%
+            break;
+        case 0x7:   // 225 deg
+            sketchyPercentage = 11; // 73.3%
+            break;
+        case 0x3:   // 270 deg
+            sketchyPercentage = 13; // 86.6%
+            break;
+        case 0x2:   // 315 deg
+            sketchyPercentage = 15; // 100%
             break;
     }
 }
