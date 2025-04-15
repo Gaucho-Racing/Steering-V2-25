@@ -18,7 +18,7 @@ void pollEncoderStatus(Encoder encoder)
                 (HAL_GPIO_ReadPin(CME_P1_GPIO_Port, CME_P1_Pin) << 3) |
                 (HAL_GPIO_ReadPin(CME_P2_GPIO_Port, CME_P2_Pin) << 2) |
                 (HAL_GPIO_ReadPin(CME_P3_GPIO_Port, CME_P3_Pin) << 1) |
-                HAL_GPIO_ReadPin(RME_P4_GPIO_Port, RME_P4_Pin);
+                HAL_GPIO_ReadPin(CME_P4_GPIO_Port, CME_P4_Pin);
 
             break;
 
@@ -79,7 +79,7 @@ void pollEncoderStatus(Encoder encoder)
             if (globalEncoderPercentages.current != value)
             {
                 globalEncoderPercentages.current = value;
-                sendStatus();
+                updatedDataRecieved();
             }
 
             break;
@@ -88,7 +88,7 @@ void pollEncoderStatus(Encoder encoder)
             if (globalEncoderPercentages.regen != value)
             {
                 globalEncoderPercentages.current = value;
-                sendStatus();
+                updatedDataRecieved();
             }
 
             break;
@@ -97,9 +97,26 @@ void pollEncoderStatus(Encoder encoder)
             if (globalEncoderPercentages.torque != value)
             {
                 globalEncoderPercentages.torque = value;
-                sendStatus();
+                updatedDataRecieved();
             }
 
             break;
+    }
+}
+
+void pollButtonStatus(void)
+{
+    uint8_t old = outgoingData.steeringStatusMsg.RMEandButtonMap;
+
+    outgoingData.steeringStatusMsg.RMEandButtonMap =
+        ((outgoingData.steeringStatusMsg.RMEandButtonMap >> 4) << 4) |
+        (HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin) << 3) |
+        (HAL_GPIO_ReadPin(BUTTON_2_GPIO_Port, BUTTON_2_Pin) << 2) |
+        (HAL_GPIO_ReadPin(BUTTON_3_GPIO_Port, BUTTON_3_Pin) << 1) | 
+        HAL_GPIO_ReadPin(BUTTON_4_GPIO_Port, BUTTON_4_Pin);
+    
+    if (old != outgoingData.steeringStatusMsg.RMEandButtonMap)
+    {
+        updatedDataRecieved();
     }
 }

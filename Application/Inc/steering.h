@@ -1,5 +1,7 @@
 #include <stdint.h>
 
+#include "CANdler.h"
+
 #ifndef STEERING_H
     #define STEERING_H
 
@@ -13,8 +15,14 @@
         char debugMessage[64];   // Treat as a string, if first bit '\0' then no message, clear in steering
     } IncomingData;
 
-    extern volatile IncomingData incomingData;
+    typedef struct {
+        SteeringStatusMsg steeringStatusMsg;
+        SteeringConfigMsg steeringConfigMsg;
+    } OutgoingData;
 
-    void sendStatus();
-    void initLVGL();
+    extern volatile IncomingData incomingData;
+    extern volatile OutgoingData outgoingData;
+
+    void initLVGL(void);
+    void updatedDataRecieved(void);
 #endif

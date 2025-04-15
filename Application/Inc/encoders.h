@@ -18,4 +18,5 @@
     extern volatile EncoderPercentages globalEncoderPercentages;
 
     void pollEncoderStatus(Encoder encoder);
+    void pollButtonStatus(void);
 #endif

@@ -26,6 +26,12 @@
 /* USER CODE BEGIN Includes */
 #include "lvgl/lvgl.h"
 #include "encoders.h"
+#include "steering.h"
+#include "fdcan.h"
+#include "steering.h"
+#include "CANdler.h"
+#include "msgIDs.h"
+#include "grIDs.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,6 +72,13 @@ const osThreadAttr_t pinPoll_attributes = {
   .stack_size = 4* 1024
 };
 
+osThreadId_t statusHeartbeatHandle;
+const osThreadAttr_t statusHeartbeat_attributes = {
+  .name = "statusHeartbeat",
+  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 4* 1024
+};
+
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -80,6 +93,7 @@ const osThreadAttr_t defaultTask_attributes = {
 void LVGLTimer(void *argument);
 void LVGLTick(void *argument);
 void PinPoll(void *argument);
+void StatusHeartbeat(void *argument);
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
@@ -166,6 +180,7 @@ void MX_FREERTOS_Init(void) {
   lvglTickHandle = osThreadNew(LVGLTick, NULL, &lvglTick_attributes);
   lvglTimerHandle = osThreadNew(LVGLTimer, NULL, &lvglTimer_attributes);
   pinPollHandle = osThreadNew(PinPoll, NULL, &pinPoll_attributes);
+  statusHeartbeatHandle = osThreadNew(StatusHeartbeat, NULL, &statusHeartbeat_attributes);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -215,18 +230,35 @@ void LVGLTick(void *argument)
   UNUSED(argument);
 }
 
-const uint32_t POLL_DELAY = 30 / 3;
+const uint32_t POLL_DELAY = 40 / 4;
 /* poll pins */
 void PinPoll(void *argument)
 {
+  UNUSED(argument);
+
   for(;;)
   {
     pollEncoderStatus(ENC_CURRENT);
     osDelay(POLL_DELAY);
+
     pollEncoderStatus(ENC_TORQUE);
     osDelay(POLL_DELAY);
+
     pollEncoderStatus(ENC_REGEN);
     osDelay(POLL_DELAY);
+
+    pollButtonStatus();
+    osDelay(POLL_DELAY);
+  }
+}
+
+/* Status heartbeat*/
+void StatusHeartbeat(void *argument)
+{
+  for(;;)
+  {
+    writeToECU(MSG_STEERING_STATUS, (uint8_t*)&outgoingData.steeringStatusMsg, 2);
+    osDelay(250);
   }
   UNUSED(argument);
 }
