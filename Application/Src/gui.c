@@ -32,12 +32,14 @@ void initGrid(lv_obj_t* screen, lv_obj_t * cells[])
     for (size_t i = 0; i < GRID_ROWS * GRID_COLUMNS; i++)
     {
         p_bg = lv_obj_create(grid);
+
         if (p_bg == NULL)
         {
             LOGOMATIC("lv_obj_create(grid) is equal to NULL! Oh no");
             lv_obj_set_style_bg_color(cells[0], lv_color_hex(0xff0000), LV_PART_MAIN);
             return;
         }
+
         cells[i] = p_bg;
         lv_obj_set_size(p_bg, 15, 15);
 
