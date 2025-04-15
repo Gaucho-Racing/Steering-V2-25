@@ -199,10 +199,10 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN defaultTask */
   /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+  // for(;;)
+  // {
+  //   osDelay(1);
+  // }
   UNUSED(argument);
   /* USER CODE END defaultTask */
 }
