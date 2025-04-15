@@ -7,13 +7,16 @@ const size_t SCREEN_HEIGHT_PX = 480;
 int32_t col_dsc[GRID_COLUMNS + 1];
 int32_t row_dsc[GRID_ROWS + 1];
 
-void initGrid(lv_obj_t* screen, lv_obj_t * cells[]) {
-    for (size_t i = 0; i < GRID_COLUMNS; i++) {
+void initGrid(lv_obj_t* screen, lv_obj_t * cells[])
+{
+    for (size_t i = 0; i < GRID_COLUMNS; i++)
+    {
         col_dsc[i] = SCREEN_WIDTH_PX / 2 / GRID_COLUMNS;
     }
     col_dsc[GRID_COLUMNS] = LV_GRID_TEMPLATE_LAST;
 
-    for (size_t i = 0; i < GRID_ROWS; i++) {
+    for (size_t i = 0; i < GRID_ROWS; i++)
+    {
         row_dsc[i] = SCREEN_HEIGHT_PX / 2 /  GRID_ROWS;
     }
     row_dsc[GRID_ROWS] = LV_GRID_TEMPLATE_LAST;
@@ -25,8 +28,14 @@ void initGrid(lv_obj_t* screen, lv_obj_t * cells[]) {
 
     lv_obj_t * p_bg;
 
-    for (size_t i = 0; i < GRID_ROWS * GRID_COLUMNS; i++) {
+    for (size_t i = 0; i < GRID_ROWS * GRID_COLUMNS; i++)
+    {
         p_bg = lv_obj_create(grid);
+        if (p_bg == NULL)
+        {
+            lv_obj_set_style_bg_color(cells[0], lv_color_hex(0xff0000), LV_PART_MAIN);
+            return;
+        }
         cells[i] = p_bg;
         lv_obj_set_size(p_bg, 15, 15);
 

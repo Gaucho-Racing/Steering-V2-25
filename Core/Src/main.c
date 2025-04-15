@@ -166,7 +166,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    //LOGOMATIC("You should not have gotten here :)\n");
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
