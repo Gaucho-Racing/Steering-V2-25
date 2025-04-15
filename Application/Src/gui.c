@@ -34,7 +34,7 @@ void initGrid(lv_obj_t* screen, lv_obj_t * cells[])
         p_bg = lv_obj_create(grid);
         if (p_bg == NULL)
         {
-            LOGOMATIC("lv_obj_create(grid) is equal to NULL!!! Oh no!!! Panic!!!");
+            LOGOMATIC("lv_obj_create(grid) is equal to NULL! Oh no");
             lv_obj_set_style_bg_color(cells[0], lv_color_hex(0xff0000), LV_PART_MAIN);
             return;
         }
