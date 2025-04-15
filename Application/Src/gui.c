@@ -1,5 +1,6 @@
 #include "gui.h"
 #include "lvgl/lvgl.h"
+#include "utils.h"
 
 const size_t SCREEN_WIDTH_PX = 800;
 const size_t SCREEN_HEIGHT_PX = 480;
