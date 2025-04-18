@@ -18,6 +18,7 @@ volatile IncomingData incomingData = {0};
 void updatedDataRecieved(void)
 {
     outgoingData.steeringStatusMsg.CMEandTME = (globalEncoderPercentages.current << 4) | globalEncoderPercentages.torque;
+
     // TODO: You have new data, update screen with stuff
 }
 
