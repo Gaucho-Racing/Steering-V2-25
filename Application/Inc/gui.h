@@ -13,6 +13,7 @@
     #define GR_COLOR_PURPLE 0x7920FF
     #define GR_COLOR_NAVY 0x195297
     #define GR_COLOR_GRAY 0x9AA3B0
+    #define GR_COLOR_WHITE 0xFFFFFF
 
     void initGrid(lv_obj_t* screen, lv_obj_t* cells[]);
 #endif
