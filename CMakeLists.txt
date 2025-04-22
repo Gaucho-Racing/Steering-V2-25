@@ -100,7 +100,6 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add project symbols (macros)
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined symbols
-    LOGOMATIC_ENABLED
 )
 
 # Add linked libraries
