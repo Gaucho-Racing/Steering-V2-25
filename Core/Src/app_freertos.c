@@ -29,6 +29,7 @@
 #include "steering.h"
 #include "fdcan.h"
 #include "steering.h"
+#include "gui.h"
 #include "CANdler.h"
 #include "msgIDs.h"
 #include "grIDs.h"
@@ -215,6 +216,13 @@ void LVGLTimer(void *argument)
 {
   for(;;)
   {
+    // if (isDataChanged) {
+    //   incomingData.cellData[40].cellVoltage = 50;
+    //   //updateCellVoltages(incomingData.cellData, chart);
+    //   buildDebug();
+    //   lv_refr_now(NULL);
+    //   isDataChanged = false;
+    // }
     osDelay(lv_timer_handler());
   }
   UNUSED(argument);
