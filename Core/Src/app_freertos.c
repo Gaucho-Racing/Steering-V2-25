@@ -42,7 +42,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define ENCODER_POLL_DELAY 40 / 4
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -230,7 +230,6 @@ void LVGLTick(void *argument)
   UNUSED(argument);
 }
 
-const uint32_t POLL_DELAY = 40 / 4;
 /* poll pins */
 void PinPoll(void *argument)
 {
@@ -240,16 +239,16 @@ void PinPoll(void *argument)
   {
     LOGOMATIC("C\n");
     pollEncoderStatus(ENC_CURRENT);
-    osDelay(POLL_DELAY);
+    osDelay(ENCODER_POLL_DELAY);
 
     pollEncoderStatus(ENC_TORQUE);
-    osDelay(POLL_DELAY);
+    osDelay(ENCODER_POLL_DELAY);
 
     pollEncoderStatus(ENC_REGEN);
-    osDelay(POLL_DELAY);
+    osDelay(ENCODER_POLL_DELAY);
 
     pollButtonStatus();
-    osDelay(POLL_DELAY);
+    osDelay(ENCODER_POLL_DELAY);
     LOGOMATIC("/C\n");
   }
 }
