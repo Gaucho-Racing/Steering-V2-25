@@ -70,6 +70,8 @@ static void draw_event_cb(lv_event_t * e)
  */
 void drawCellVoltages(IncomingACUCellData *cellData, size_t dataLen, int32_t y)
 {
+    LV_UNUSED(y);
+
     /*Create a chart1*/
     lv_obj_t * chart = lv_chart_create(lv_screen_active());
     lv_chart_set_type(chart, LV_CHART_TYPE_BAR);
