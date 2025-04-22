@@ -32,6 +32,7 @@
 #include "CANdler.h"
 #include "msgIDs.h"
 #include "grIDs.h"
+#include "utils.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -180,7 +181,7 @@ void MX_FREERTOS_Init(void) {
   lvglTickHandle = osThreadNew(LVGLTick, NULL, &lvglTick_attributes);
   lvglTimerHandle = osThreadNew(LVGLTimer, NULL, &lvglTimer_attributes);
   pinPollHandle = osThreadNew(PinPoll, NULL, &pinPoll_attributes);
-  statusHeartbeatHandle = osThreadNew(StatusHeartbeat, NULL, &statusHeartbeat_attributes);
+  //statusHeartbeatHandle = osThreadNew(StatusHeartbeat, NULL, &statusHeartbeat_attributes);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -199,10 +200,10 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN defaultTask */
   /* Infinite loop */
-  // for(;;)
-  // {
-  //   osDelay(1);
-  // }
+  for(;;)
+  {
+    osDelay(1);
+  }
   UNUSED(argument);
   /* USER CODE END defaultTask */
 }
@@ -238,6 +239,7 @@ void PinPoll(void *argument)
 
   for(;;)
   {
+    LOGOMATIC("C\n");
     pollEncoderStatus(ENC_CURRENT);
     osDelay(POLL_DELAY);
 
@@ -249,6 +251,7 @@ void PinPoll(void *argument)
 
     pollButtonStatus();
     osDelay(POLL_DELAY);
+    LOGOMATIC("/C\n");
   }
 }
 
@@ -257,8 +260,10 @@ void StatusHeartbeat(void *argument)
 {
   for(;;)
   {
+    LOGOMATIC("D\n");
     writeToECU(MSG_STEERING_STATUS, (uint8_t*)&outgoingData.steeringStatusMsg, 2);
     osDelay(250);
+    LOGOMATIC("/D\n");
   }
   UNUSED(argument);
 }

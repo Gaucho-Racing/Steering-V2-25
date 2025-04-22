@@ -45,6 +45,7 @@
 #include "lvgl/lvgl.h"
 #include "lvgl/demos/lv_demos.h"
 #include "lvgl_port_display.h"
+#include "utils.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -148,6 +149,7 @@ int main(void)
   /* initialize display and touchscreen */
   lvgl_display_init();
   initLVGL();
+  LOGOMATIC("Handing control over\n");
   /* USER CODE END 2 */
 
   /* Init scheduler */

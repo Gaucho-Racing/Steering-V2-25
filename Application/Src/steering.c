@@ -29,7 +29,7 @@ void initLVGL(void)
     lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x00ff00), LV_PART_MAIN);
     lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
 
-    initGrid(lv_screen_active(), cells);
+    drawCellVoltages(incomingData.cellData, 24*4, 0);
 
     // lv_obj_set_style_bg_color(cells[30], lv_color_hex(0xff0000), LV_PART_MAIN);
 }
