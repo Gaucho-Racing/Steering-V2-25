@@ -233,8 +233,6 @@ void LVGLTick(void *argument)
 /* poll pins */
 void PinPoll(void *argument)
 {
-  UNUSED(argument);
-
   for(;;)
   {
     LOGOMATIC("C\n");
@@ -251,6 +249,7 @@ void PinPoll(void *argument)
     osDelay(ENCODER_POLL_DELAY);
     LOGOMATIC("/C\n");
   }
+  UNUSED(argument);
 }
 
 /* Status heartbeat*/
