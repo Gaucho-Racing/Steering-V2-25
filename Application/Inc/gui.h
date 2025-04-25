@@ -19,8 +19,8 @@
     #define GR_COLOR_GRAY 0x9AA3B0
     #define GR_COLOR_WHITE 0xFFFFFF
 
-    void updateCellVoltages(IncomingACUCellData *cellData, LvglChart chart);
-    LvglChart drawCellVoltages(IncomingACUCellData *cellData, size_t dataLen, int32_t y);
+    void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart chart);
+    LvglChart drawCellVoltages(volatile IncomingACUCellData *cellData, size_t dataLen, int32_t y);
     void initGrid(lv_obj_t* screen, lv_obj_t* cells[]);
     void initGrid2(lv_obj_t* screen);
 

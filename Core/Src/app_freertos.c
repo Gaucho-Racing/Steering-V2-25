@@ -81,6 +81,8 @@ const osThreadAttr_t statusHeartbeat_attributes = {
   .stack_size = 4* 1024
 };
 
+bool thisIsMine = true;
+
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -203,7 +205,11 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    osDelay(10);
+    if (thisIsMine) {
+      isDataChanged = true;
+      thisIsMine = false;
+    }
   }
   UNUSED(argument);
   /* USER CODE END defaultTask */
@@ -216,13 +222,13 @@ void LVGLTimer(void *argument)
 {
   for(;;)
   {
-    // if (isDataChanged) {
-    //   incomingData.cellData[40].cellVoltage = 50;
-    //   //updateCellVoltages(incomingData.cellData, chart);
-    //   buildDebug();
-    //   lv_refr_now(NULL);
-    //   isDataChanged = false;
-    // }
+    if (isDataChanged) {
+      //incomingData.cellData[40].cellVoltage = 50;
+      //updateCellVoltages(incomingData.cellData, chart);
+      buildDebug();
+      lv_refr_now(NULL);
+      isDataChanged = false;
+    }
     osDelay(lv_timer_handler());
   }
   UNUSED(argument);

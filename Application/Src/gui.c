@@ -89,7 +89,7 @@ static void draw_event_cb(lv_event_t * e)
     }
 }
 
-void updateCellVoltages(IncomingACUCellData *cellData, LvglChart chart) {
+void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart chart) {
     lv_chart_set_next_value(chart.chart, chart.ser, 100);
     lv_chart_set_next_value(chart.chart, chart.ser, cellData[40].cellVoltage);
     uint32_t i;
@@ -112,7 +112,7 @@ void buildDebug() {
 /**
  * Recolor the bars of a chart based on their value
  */
-LvglChart drawCellVoltages(IncomingACUCellData *cellData, size_t dataLen, int32_t y)
+LvglChart drawCellVoltages(volatile IncomingACUCellData *cellData, size_t dataLen, int32_t y)
 {
     LV_UNUSED(y);
 
