@@ -50,6 +50,8 @@ void lvgl_display_init(void)
   //lv_display_set_flush_wait_cb(display, disp_flush_wait);
   lv_display_set_buffers(display, buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
 
+  HAL_LTDC_SetAddress(&hltdc, (uint32_t) &buf_1, LTDC_LAYER_1);
+
   /* set the resolution of the display */
   // disp_drv.hor_res = MY_DISP_HOR_RES;
   // disp_drv.ver_res = MY_DISP_VER_RES;
