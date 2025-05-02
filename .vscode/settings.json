@@ -26,4 +26,5 @@
         "**/Third_Party/**"
     ],
     "cSpell.diagnosticLevel": "Hint",
+    "cortex-debug.variableUseNaturalFormat": false,
 }

@@ -205,7 +205,7 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(10);
+    osDelay(100);
     if (thisIsMine) {
       isDataChanged = true;
       thisIsMine = false;
@@ -226,7 +226,6 @@ void LVGLTimer(void *argument)
       //incomingData.cellData[40].cellVoltage = 50;
       //updateCellVoltages(incomingData.cellData, chart);
       buildDebug();
-      lv_refr_now(NULL);
       isDataChanged = false;
     }
     osDelay(lv_timer_handler());
