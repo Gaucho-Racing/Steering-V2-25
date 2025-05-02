@@ -15,14 +15,13 @@
 
 static void disp_flush(lv_display_t *, const lv_area_t *, uint8_t *color_p);
 static void disp_flush_complete(DMA2D_HandleTypeDef *);
-static void disp_flush_wait(lv_display_t * disp);
 
 /**********************
  *  STATIC VARIABLES
  **********************/
 
 volatile bool flushed = true;
-volatile lv_display_t *display;
+lv_display_t *display;
 
 
 volatile uint16_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];
@@ -47,7 +46,7 @@ void lvgl_display_init(void)
   display = lv_display_create(MY_DISP_HOR_RES, MY_DISP_VER_RES);
   lv_display_set_flush_cb(display, disp_flush);
   //lv_display_set_flush_wait_cb(display, disp_flush_wait);
-  lv_display_set_buffers(display, buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
+  lv_display_set_buffers(display, (void*) &buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
 
   HAL_LTDC_SetAddress(&hltdc, (uint32_t) &buf_1, LTDC_LAYER_1);
 
@@ -89,7 +88,6 @@ static void disp_flush(lv_display_t *drv, const lv_area_t *area, uint8_t *color_
   DMA2D->FGMAR = (uint32_t)color_p;
   DMA2D->FGOR = 0;
   DMA2D->OPFCCR = DMA2D_OUTPUT_RGB565;
-  uint32_t test = hltdc.LayerCfg[0].FBStartAdress + 2 * (area->y1 * MY_DISP_HOR_RES + area->x1);
   DMA2D->OMAR = hltdc.LayerCfg[0].FBStartAdress + 2 * (area->y1 * MY_DISP_HOR_RES + area->x1);
   DMA2D->OOR = MY_DISP_HOR_RES - width;
   DMA2D->NLR = (width << DMA2D_NLR_PL_Pos) | (height << DMA2D_NLR_NL_Pos);
@@ -98,17 +96,9 @@ static void disp_flush(lv_display_t *drv, const lv_area_t *area, uint8_t *color_
   DMA2D->CR |= DMA2D_CR_START;
 }
 
-static void disp_flush_wait(lv_display_t * disp) {
-  while (!flushed) {
-    osDelay(10);
-  }
-}
-
 static void disp_flush_complete(DMA2D_HandleTypeDef *hdma2d)
 {
-  //flushed = true;
-  HAL_GPIO_WritePin(USR_LED_GPIO_Port, USR_LED_Pin, GPIO_PIN_SET);
+  UNUSED(hdma2d);
+
   lv_display_flush_ready(display);
-  // UNUSED(hdma2d);
-  // TODO: remove unused
 }
