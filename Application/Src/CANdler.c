@@ -21,6 +21,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
             strncpy((char*)incomingData.debugMessage, (char*)data, length);
 
             break;
+
         case MSG_PING:
             if (length != 4) {
                 numberOfBadMessages++;
@@ -31,9 +32,12 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
             
             writeMessage(MSG_PING, srcID, data, length);    // Right back at you buckaroo
 
+            break;
+
         case MSG_STEERING_CONFIG:
             // RESERVED
             break;
+
         case MSG_ACU_CELL_DATA_1:
             if (length != 64) {
                 numberOfBadMessages++;
@@ -45,6 +49,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
             memcpy((char*)incomingData.cellData, data, length);
 
             break;
+
         case MSG_ACU_CELL_DATA_2:
             if (length != 64) {
                 numberOfBadMessages++;
@@ -56,6 +61,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
             memcpy((char*)incomingData.cellData + length, data, length);
 
             break;
+
         case MSG_ACU_CELL_DATA_3:
             if (length != 64) {
                 numberOfBadMessages++;
@@ -67,6 +73,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
             memcpy((char*)incomingData.cellData + 2 * length, data, length);
 
             break;
+
         case MSG_ACU_CELL_DATA_4:
             if (length != 64) {
                 numberOfBadMessages++;
@@ -78,6 +85,7 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
             memcpy((char*)incomingData.cellData + 3 * length, data, length);
 
             break;
+            
         case MSG_ACU_CELL_DATA_5:
             if (length != 64) {
                 numberOfBadMessages++;
