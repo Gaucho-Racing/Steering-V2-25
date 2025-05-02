@@ -15,7 +15,6 @@
 
 static void disp_flush(lv_display_t *, const lv_area_t *, uint8_t *color_p);
 static void disp_flush_complete(DMA2D_HandleTypeDef *);
-static void throwaway(DMA2D_HandleTypeDef *);
 static void disp_flush_wait(lv_display_t * disp);
 
 /**********************
@@ -62,7 +61,7 @@ void lvgl_display_init(void)
   // disp_drv.direct_mode = 1;
 
   /* interrupt callback for DMA2D transfer */
-  HAL_DMA2D_RegisterCallback(&hdma2d, HAL_DMA2D_TRANSFERCOMPLETE_CB_ID, throwaway);
+  HAL_DMA2D_RegisterCallback(&hdma2d, HAL_DMA2D_TRANSFERCOMPLETE_CB_ID, disp_flush_complete);
 
   /* set a display buffer */
   // disp_drv.draw_buf = &disp_buf;
@@ -97,19 +96,12 @@ static void disp_flush(lv_display_t *drv, const lv_area_t *area, uint8_t *color_
   DMA2D->IFCR = 0x3FU;
   DMA2D->CR |= DMA2D_CR_TCIE;
   DMA2D->CR |= DMA2D_CR_START;
-
-  osDelay(10);
-  disp_flush_complete(&hdma2d);
 }
 
 static void disp_flush_wait(lv_display_t * disp) {
   while (!flushed) {
     osDelay(10);
   }
-}
-
-static void throwaway(DMA2D_HandleTypeDef *) {
-
 }
 
 static void disp_flush_complete(DMA2D_HandleTypeDef *hdma2d)
