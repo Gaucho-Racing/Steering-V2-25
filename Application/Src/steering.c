@@ -12,6 +12,7 @@
 #include "tim.h"
 #include "gui.h"
 
+// TODO Confirm scaling is appropriate
 volatile OutgoingData outgoingData = {0};
 volatile IncomingData incomingData = {0};
 
