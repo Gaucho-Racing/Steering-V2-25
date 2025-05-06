@@ -153,7 +153,7 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Init scheduler */
-  osKernelInitialize(); 
+  osKernelInitialize();
 
   /* Call init function for freertos objects (in app_freertos.c) */
   MX_FREERTOS_Init();
@@ -168,7 +168,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    //LOGOMATIC("You should not have gotten here :)\n");
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

@@ -6,6 +6,8 @@
 #include "main.h"
 #include "ltdc.h"
 #include "dma2d.h"
+#include "stm32u5xx_hal_dma2d.h"
+#include "cmsis_os2.h"
 
 /**********************
  *  STATIC PROTOTYPES
@@ -18,9 +20,11 @@ static void disp_flush_complete(DMA2D_HandleTypeDef *);
  *  STATIC VARIABLES
  **********************/
 
-static lv_display_t *display;
+volatile bool flushed = true;
+lv_display_t *display;
 
-static uint16_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];
+
+volatile uint16_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];
 
 /**********************
  *   GLOBAL FUNCTIONS
@@ -41,7 +45,10 @@ void lvgl_display_init(void)
   // lv_disp_drv_init(&disp_drv);
   display = lv_display_create(MY_DISP_HOR_RES, MY_DISP_VER_RES);
   lv_display_set_flush_cb(display, disp_flush);
-  lv_display_set_buffers(display, buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
+  //lv_display_set_flush_wait_cb(display, disp_flush_wait);
+  lv_display_set_buffers(display, (void*) &buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
+
+  HAL_LTDC_SetAddress(&hltdc, (uint32_t) &buf_1, LTDC_LAYER_1);
 
   /* set the resolution of the display */
   // disp_drv.hor_res = MY_DISP_HOR_RES;
@@ -53,7 +60,7 @@ void lvgl_display_init(void)
   // disp_drv.direct_mode = 1;
 
   /* interrupt callback for DMA2D transfer */
-  hdma2d.XferCpltCallback = disp_flush_complete;
+  HAL_DMA2D_RegisterCallback(&hdma2d, HAL_DMA2D_TRANSFERCOMPLETE_CB_ID, disp_flush_complete);
 
   /* set a display buffer */
   // disp_drv.draw_buf = &disp_buf;
@@ -71,6 +78,7 @@ static void disp_flush(lv_display_t *drv, const lv_area_t *area, uint8_t *color_
   // TODO: update such that drv --> lv_display_t
   // TODO: update such that color_p --> uint8_t
   UNUSED(drv);
+  flushed = false;
 
   lv_coord_t width = lv_area_get_width(area);
   lv_coord_t height = lv_area_get_height(area);
@@ -90,7 +98,7 @@ static void disp_flush(lv_display_t *drv, const lv_area_t *area, uint8_t *color_
 
 static void disp_flush_complete(DMA2D_HandleTypeDef *hdma2d)
 {
-  lv_display_flush_ready(display);
   UNUSED(hdma2d);
-  // TODO: remove unused
+
+  lv_display_flush_ready(display);
 }

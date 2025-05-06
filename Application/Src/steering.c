@@ -15,15 +15,16 @@
 // TODO Confirm scaling is appropriate
 volatile OutgoingData outgoingData = {0};
 volatile IncomingData incomingData = {0};
+volatile LvglChart chart = {0};
+volatile bool isDataChanged = false;
 
 void updatedDataRecieved(void)
 {
     outgoingData.steeringStatusMsg.CMEandTME = (globalEncoderPercentages.current << 4) | globalEncoderPercentages.torque;
-
+    incomingData.cellData[40].cellVoltage = 50;
+    isDataChanged = true;
     // TODO: You have new data, update screen with stuff
 }
-
-lv_obj_t* cells[160];
 
 void initLVGL(void)
 {
@@ -31,7 +32,7 @@ void initLVGL(void)
     lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x00ff00), LV_PART_MAIN);
     lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
 
-    drawCellVoltages((IncomingACUCellData*)incomingData.cellData, 24*4, 0);
+    chart = drawCellVoltages(incomingData.cellData, 24*4, 0);
 
     // lv_obj_set_style_bg_color(cells[30], lv_color_hex(0xff0000), LV_PART_MAIN);
 }

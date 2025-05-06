@@ -75,6 +75,8 @@ void Error_Handler(void);
 #define CTP_RST_GPIO_Port GPIOE
 #define RME_P2_Pin GPIO_PIN_4
 #define RME_P2_GPIO_Port GPIOH
+#define USR_LED_Pin GPIO_PIN_5
+#define USR_LED_GPIO_Port GPIOE
 #define RME_P1_Pin GPIO_PIN_10
 #define RME_P1_GPIO_Port GPIOA
 #define CTP_INT_Pin GPIO_PIN_6

@@ -29,6 +29,7 @@
 #include "steering.h"
 #include "fdcan.h"
 #include "steering.h"
+#include "gui.h"
 #include "CANdler.h"
 #include "msgIDs.h"
 #include "grIDs.h"
@@ -79,6 +80,8 @@ const osThreadAttr_t statusHeartbeat_attributes = {
   .priority = (osPriority_t) osPriorityLow,
   .stack_size = 4* 1024
 };
+
+bool thisIsMine = true;
 
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
@@ -202,7 +205,11 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    osDelay(100);
+    if (thisIsMine) {
+      isDataChanged = true;
+      thisIsMine = false;
+    }
   }
   UNUSED(argument);
   /* USER CODE END defaultTask */
@@ -215,6 +222,12 @@ void LVGLTimer(void *argument)
 {
   for(;;)
   {
+    if (isDataChanged) {
+      //incomingData.cellData[40].cellVoltage = 50;
+      //updateCellVoltages(incomingData.cellData, chart);
+      buildDebug();
+      isDataChanged = false;
+    }
     osDelay(lv_timer_handler());
   }
   UNUSED(argument);

@@ -21,6 +21,7 @@
 #include "ltdc.h"
 
 /* USER CODE BEGIN 0 */
+extern volatile uint16_t buf_1[];
 
 /* USER CODE END 0 */
 

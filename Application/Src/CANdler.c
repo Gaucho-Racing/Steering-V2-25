@@ -9,6 +9,8 @@
 volatile int numberOfBadMessages = 0;
 
 void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t length) {
+    incomingData.cellData[0].cellVoltage = 100;
+    updatedDataRecieved();
     switch(msgID) {
         case MSG_DEBUG_FD:
             if (length > 64) {
