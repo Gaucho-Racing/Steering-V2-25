@@ -12,7 +12,7 @@
 #include "tim.h"
 #include "gui.h"
 
-// TODO Confirm scaling is appropriate
+// TODO Confirm scaling is appropriate (so far lgtm)
 volatile OutgoingData outgoingData = {0};
 volatile IncomingData incomingData = {0};
 volatile LvglChart chart = {0};
@@ -23,6 +23,7 @@ void updatedDataRecieved(void)
     outgoingData.steeringStatusMsg.CMEandTME = (globalEncoderPercentages.current << 4) | globalEncoderPercentages.torque;
     incomingData.cellData[40].cellVoltage = 50;
     isDataChanged = true;
+
     // TODO: You have new data, update screen with stuff
 }
 
