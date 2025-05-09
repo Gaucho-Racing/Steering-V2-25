@@ -102,6 +102,15 @@ void handleCANMessage(uint16_t msgID, uint8_t srcID, uint8_t *data, uint32_t len
             memcpy((char*)incomingData.cellData + 4 * length, data, length);
 
             break;
+        case MSG_ECU_PING_INFORMATION:
+            if (length != 8) {
+                numberOfBadMessages++;
+                return;
+            } else {
+                numberOfBadMessages += (numberOfBadMessages > 0) ? -1 : 0;
+            }
+
+            //TODO: Parse ping information
 
         default:
             return;
