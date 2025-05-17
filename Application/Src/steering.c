@@ -14,7 +14,7 @@
 
 // TODO Confirm scaling is appropriate (so far lgtm)
 volatile OutgoingData outgoingData = {0};
-volatile IncomingData incomingData = {0};
+volatile IncomingData incomingData = {0, .debugMessage = "Booting -> No data recieved yet"};
 volatile LvglChart chart = {0};
 volatile bool isDataChanged = false;
 
