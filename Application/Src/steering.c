@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "lvgl/lvgl.h"
 #include "lvgl/demos/lv_demos.h"
 #include "lvgl_port_display.h"
@@ -14,7 +16,7 @@
 
 // TODO Confirm scaling is appropriate (so far lgtm)
 volatile OutgoingData outgoingData = {0};
-volatile IncomingData incomingData = {0, .debugMessage = "Booting -> No data recieved yet"};
+volatile IncomingData incomingData = {0};
 volatile LvglChart chart = {0};
 volatile bool isDataChanged = false;
 
@@ -29,6 +31,8 @@ void updatedDataRecieved(void)
 
 void initLVGL(void)
 {
+    strncpy((char*)incomingData.debugMessage, "Booting -> No data recieved yet", 32);
+
     /* Change Active Screen's background color */
     lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x00ff00), LV_PART_MAIN);
     lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
