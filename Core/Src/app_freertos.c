@@ -206,10 +206,6 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
     osDelay(100);
-    if (thisIsMine) {
-      isDataChanged = true;
-      thisIsMine = false;
-    }
   }
   UNUSED(argument);
   /* USER CODE END defaultTask */
@@ -223,12 +219,11 @@ void LVGLTimer(void *argument)
   for(;;)
   {
     if (isDataChanged) {
-      //incomingData.cellData[40].cellVoltage = 50;
-      //updateCellVoltages(incomingData.cellData, chart);
-      buildDebug();
+      refreshScreen(incomingData);
       isDataChanged = false;
     }
-    osDelay(lv_timer_handler());
+    lv_timer_handler();
+    osDelay(10);
   }
   UNUSED(argument);
 }

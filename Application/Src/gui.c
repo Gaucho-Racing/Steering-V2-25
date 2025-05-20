@@ -3,8 +3,34 @@
 #include "utils.h"
 #include "steering.h"
 
+volatile LvglChart lvglChart = {0};
+volatile LvglLabel debug = {0};
+
 const size_t SCREEN_WIDTH_PX = 800;
 const size_t SCREEN_HEIGHT_PX = 480;
+
+
+void initLVGL(void)
+{
+    /* Change Active Screen's background color */
+    lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x00ff00), LV_PART_MAIN);
+    lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
+
+    initCellChart(incomingData.cellData, 24*4, 0);
+    initDebugMsg();
+    // lv_obj_set_style_bg_color(cells[30], lv_color_hex(0xff0000), LV_PART_MAIN);
+}
+
+void refreshScreen(volatile IncomingData data) {
+    updateCellVoltages(data.cellData, lvglChart);
+
+    if (data.debugMessage[0] != '\0') {
+        lv_label_set_text(debug.text, data.debugMessage);
+        lv_obj_clear_flag(debug.panel, LV_OBJ_FLAG_HIDDEN);
+    } else {
+        lv_obj_add_flag(debug.panel, LV_OBJ_FLAG_HIDDEN);
+    }
+}
 
 void initGrid2(lv_obj_t* screen) {
     LV_DRAW_BUF_DEFINE_STATIC(drawBuffer, GRID_WIDTH_PX, GRID_HEIGHT_PX, LV_COLOR_FORMAT_RGB565);
@@ -80,8 +106,8 @@ static void draw_event_cb(lv_event_t * e)
 
     lv_draw_fill_dsc_t * fill_dsc = lv_draw_task_get_fill_dsc(draw_task);
     if(fill_dsc) {
-        // lv_obj_t * chart = lv_event_get_target_obj(e);
-        //int32_t * y_array = lv_chart_get_series_y_array(chart, lv_chart_get_series_next(chart, NULL));
+        // lv_obj_t * lvglChart = lv_event_get_target_obj(e);
+        //int32_t * y_array = lv_chart_get_series_y_array(lvglChart, lv_chart_get_series_next(lvglChart, NULL));
         //int32_t v = y_array[base_dsc->id2];
 
         uint8_t ratio = (uint8_t)(50 * 255 / 100);
@@ -89,31 +115,30 @@ static void draw_event_cb(lv_event_t * e)
     }
 }
 
-void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart chart) {
-    lv_chart_set_next_value(chart.chart, chart.ser, 100);
-    lv_chart_set_next_value(chart.chart, chart.ser, cellData[40].cellVoltage);
+void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart lvglChart) {
+    lv_chart_set_next_value(lvglChart.chart, lvglChart.ser, 100);
+    lv_chart_set_next_value(lvglChart.chart, lvglChart.ser, cellData[40].cellVoltage);
     uint32_t i;
-    for(i = 2; i < chart.len; i++) {
-        lv_chart_set_next_value(chart.chart, chart.ser, cellData[0].cellVoltage);
+    for(i = 2; i < lvglChart.len; i++) {
+        lv_chart_set_next_value(lvglChart.chart, lvglChart.ser, cellData[0].cellVoltage);
     }
 }
 
-void buildDebug() {
-    lv_obj_t * panel = lv_obj_create(lv_screen_active());
-    lv_obj_set_size(panel, 800, 70);
-    lv_obj_center(panel);
-    lv_obj_set_style_bg_color(panel, lv_color_hex(0x7920FF), LV_PART_MAIN);
+void initDebugMsg() {
+    debug.panel = lv_obj_create(lv_screen_active());
+    lv_obj_set_size(debug.panel, 800, 70);
+    lv_obj_center(debug.panel);
+    lv_obj_set_style_bg_color(debug.panel, lv_color_hex(0x7920FF), LV_PART_MAIN);
+    lv_obj_add_flag(debug.panel, LV_OBJ_FLAG_HIDDEN);
 
-    lv_obj_t * text = lv_label_create(panel);
-    lv_label_set_text(text, "thanks a lot");
-    lv_obj_center(text);
+    debug.text = lv_label_create(debug.panel);
+    lv_label_set_text(debug.text, "");
+    lv_obj_center(debug.text);
 }
 
-/**
- * Recolor the bars of a chart based on their value
- */
-LvglChart drawCellVoltages(volatile IncomingACUCellData *cellData, size_t dataLen, int32_t y)
+void initCellChart(volatile IncomingACUCellData *cellData, size_t dataLen, int32_t y)
 {
+
     LV_UNUSED(y);
 
     /*Create a chart1*/
@@ -129,12 +154,9 @@ LvglChart drawCellVoltages(volatile IncomingACUCellData *cellData, size_t dataLe
     lv_obj_add_event_cb(chart, draw_event_cb, LV_EVENT_DRAW_TASK_ADDED, NULL);
     lv_obj_add_flag(chart, LV_OBJ_FLAG_SEND_DRAW_TASK_EVENTS);
 
-    LvglChart c = {
-        .chart = chart,
-        .ser = ser,
-        .len = dataLen,
-    };
+    lvglChart.chart = chart;
+    lvglChart.ser = ser;
+    lvglChart.len = dataLen;
 
-    updateCellVoltages(cellData, c);
-    return c;
+    updateCellVoltages(cellData, lvglChart);
 }

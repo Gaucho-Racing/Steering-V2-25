@@ -22,17 +22,9 @@
         SteeringConfigMsg steeringConfigMsg;
     } OutgoingData;
 
-    typedef struct {
-        lv_obj_t * chart;
-        lv_chart_series_t * ser;
-        size_t len;
-    } LvglChart;
-
     extern volatile IncomingData incomingData;
     extern volatile OutgoingData outgoingData;
     extern volatile bool isDataChanged;
-    extern volatile LvglChart chart;
 
-    void initLVGL(void);
     void updatedDataRecieved(void);
 #endif

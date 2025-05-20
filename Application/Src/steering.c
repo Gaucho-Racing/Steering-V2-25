@@ -15,7 +15,6 @@
 // TODO Confirm scaling is appropriate (so far lgtm)
 volatile OutgoingData outgoingData = {0};
 volatile IncomingData incomingData = {0};
-volatile LvglChart chart = {0};
 volatile bool isDataChanged = false;
 
 void updatedDataRecieved(void)
@@ -25,15 +24,4 @@ void updatedDataRecieved(void)
     isDataChanged = true;
 
     // TODO: You have new data, update screen with stuff
-}
-
-void initLVGL(void)
-{
-    /* Change Active Screen's background color */
-    lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x00ff00), LV_PART_MAIN);
-    lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
-
-    chart = drawCellVoltages(incomingData.cellData, 24*4, 0);
-
-    // lv_obj_set_style_bg_color(cells[30], lv_color_hex(0xff0000), LV_PART_MAIN);
 }

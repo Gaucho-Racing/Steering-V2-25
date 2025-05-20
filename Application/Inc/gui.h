@@ -19,10 +19,26 @@
     #define GR_COLOR_GRAY 0x9AA3B0
     #define GR_COLOR_WHITE 0xFFFFFF
 
+    typedef struct {
+        lv_obj_t * chart;
+        lv_chart_series_t * ser;
+        size_t len;
+    } LvglChart;
+
+    typedef struct {
+        lv_obj_t * panel;
+        lv_obj_t * text;
+    } LvglLabel;
+
+    extern volatile LvglChart lvglChart;
+    extern volatile LvglLabel debug;
+
+    void initLVGL(void);
+    void refreshScreen(volatile IncomingData data);
     void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart chart);
-    LvglChart drawCellVoltages(volatile IncomingACUCellData *cellData, size_t dataLen, int32_t y);
+    void initCellChart(volatile IncomingACUCellData *cellData, size_t dataLen, int32_t y);
     void initGrid(lv_obj_t* screen, lv_obj_t* cells[]);
     void initGrid2(lv_obj_t* screen);
 
-    void buildDebug();
+    void initDebugMsg();
 #endif
