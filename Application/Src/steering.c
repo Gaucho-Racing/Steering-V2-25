@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "lvgl/lvgl.h"
 #include "lvgl/demos/lv_demos.h"
 #include "lvgl_port_display.h"

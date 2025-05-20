@@ -13,8 +13,8 @@
 
     typedef struct {
         IncomingACUCellData cellData[160];
-        char debugMessage[64];   // Treat as a string, if first bit '\0' then no message, clear in steering
-        uint8_t ecuPingInformation;
+        char debugMessage[64];              // Treat as a string, if first bit '\0' then no message, clear in steering
+        uint8_t ecuPingMap[3];      // Literal copy of ECU Status bits
     } IncomingData;
 
     typedef struct {
