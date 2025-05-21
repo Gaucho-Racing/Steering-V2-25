@@ -222,6 +222,7 @@ void LVGLTimer(void *argument)
       refreshScreen(incomingData);
       isDataChanged = false;
     }
+
     lv_timer_handler();
     osDelay(10);
   }
