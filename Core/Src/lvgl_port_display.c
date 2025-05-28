@@ -22,7 +22,8 @@ static void disp_flush(lv_display_t *, const lv_area_t *, uint8_t *color_p);
 lv_display_t *display;
 
 
-volatile uint16_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];
+volatile uint16_t ltdc_buf[MY_DISP_HOR_RES * MY_DISP_VER_RES];
+volatile uint16_t lvgl_buf[MY_DISP_HOR_RES * MY_DISP_VER_RES];
 
 /**********************
  *   GLOBAL FUNCTIONS
@@ -43,9 +44,9 @@ void lvgl_display_init(void)
   // lv_disp_drv_init(&disp_drv);
   display = lv_display_create(MY_DISP_HOR_RES, MY_DISP_VER_RES);
   lv_display_set_flush_cb(display, disp_flush);
-  lv_display_set_buffers(display, (void*) &buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
+  lv_display_set_buffers(display, (void*) &lvgl_buf, NULL, sizeof(lvgl_buf), LV_DISPLAY_RENDER_MODE_DIRECT);
 
-  HAL_LTDC_SetAddress(&hltdc, (uint32_t) &buf_1, LTDC_LAYER_1);
+  HAL_LTDC_SetAddress(&hltdc, (uint32_t) &ltdc_buf, LTDC_LAYER_1);
 
   /* set the resolution of the display */
   // disp_drv.hor_res = MY_DISP_HOR_RES;
@@ -70,7 +71,21 @@ void lvgl_display_init(void)
 static void disp_flush(lv_display_t *drv, const lv_area_t *area, uint8_t *color_p)
 {
   UNUSED(drv);
-  UNUSED(area);
-  UNUSED(color_p);
+
+  lv_coord_t width = lv_area_get_width(area);
+  lv_coord_t height = lv_area_get_height(area);
+
+  DMA2D->CR = 0x0U << DMA2D_CR_MODE_Pos;
+  DMA2D->FGPFCCR = DMA2D_INPUT_RGB565;
+  DMA2D->FGMAR = (uint32_t)color_p;
+  DMA2D->FGOR = 0;
+  DMA2D->OPFCCR = DMA2D_OUTPUT_RGB565;
+  DMA2D->OMAR = ((uint32_t) &ltdc_buf) + 2 * (area->y1 * MY_DISP_HOR_RES + area->x1);
+  DMA2D->OOR = MY_DISP_HOR_RES - width;
+  DMA2D->NLR = (width << DMA2D_NLR_PL_Pos) | (height << DMA2D_NLR_NL_Pos);
+  DMA2D->IFCR = 0x3FU;
+  DMA2D->CR |= DMA2D_CR_TCIE;
+  DMA2D->CR |= DMA2D_CR_START;
+
   lv_display_flush_ready(display);
 }

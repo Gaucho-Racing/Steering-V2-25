@@ -2,6 +2,7 @@
 #include "lvgl/lvgl.h"
 #include "utils.h"
 #include "steering.h"
+#include <math.h>
 
 volatile LvglChart lvglChart = {0};
 volatile LvglLabel debug = {0};
@@ -19,7 +20,7 @@ void initLVGL(void)
 
     initCellChart(incomingData.cellData, 24*4, 0);
     initDebugMsg();
-    //initGrid2(lv_screen_active());
+    initGrid2(lv_screen_active());
     // lv_obj_set_style_bg_color(cells[30], lv_color_hex(0xff0000), LV_PART_MAIN);
 }
 
@@ -57,7 +58,7 @@ void initGrid2(lv_obj_t* screen) {
 
     lv_draw_rect(&layer, &rectDesc, &coords);
 
-    lv_canvas_finish_layer(canvas, &layer);
+    //lv_canvas_finish_layer(canvas, &layer);
 }
 
 void initGrid(lv_obj_t* screen, lv_obj_t * cells[])
@@ -116,12 +117,13 @@ static void draw_event_cb(lv_event_t * e)
     }
 }
 
+double k = 0;
+
 void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart lvglChart) {
-    lv_chart_set_next_value(lvglChart.chart, lvglChart.ser, 100);
-    lv_chart_set_next_value(lvglChart.chart, lvglChart.ser, cellData[40].cellVoltage);
+    k += 1./96.;
     uint32_t i;
-    for(i = 2; i < lvglChart.len; i++) {
-        lv_chart_set_next_value(lvglChart.chart, lvglChart.ser, cellData[0].cellVoltage);
+    for(i = 0; i < lvglChart.len; i++) {
+        lv_chart_set_next_value(lvglChart.chart, lvglChart.ser, (int) ((sin(k + (double) i / (double) lvglChart.len ) + 1.) * 50.));
     }
 }
 
