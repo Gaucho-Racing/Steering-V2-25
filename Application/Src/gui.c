@@ -9,6 +9,7 @@ volatile LvglLabel debug = {0};
 const size_t SCREEN_WIDTH_PX = 800;
 const size_t SCREEN_HEIGHT_PX = 480;
 
+LV_DRAW_BUF_DEFINE_STATIC(drawBuffer, GRID_WIDTH_PX, GRID_HEIGHT_PX, LV_COLOR_FORMAT_RGB565);
 
 void initLVGL(void)
 {
@@ -18,6 +19,7 @@ void initLVGL(void)
 
     initCellChart(incomingData.cellData, 24*4, 0);
     initDebugMsg();
+    //initGrid2(lv_screen_active());
     // lv_obj_set_style_bg_color(cells[30], lv_color_hex(0xff0000), LV_PART_MAIN);
 }
 
@@ -33,13 +35,12 @@ void refreshScreen(volatile IncomingData data) {
 }
 
 void initGrid2(lv_obj_t* screen) {
-    LV_DRAW_BUF_DEFINE_STATIC(drawBuffer, GRID_WIDTH_PX, GRID_HEIGHT_PX, LV_COLOR_FORMAT_RGB565);
     LV_DRAW_BUF_INIT_STATIC(drawBuffer);
 
     lv_obj_t * canvas = lv_canvas_create(screen);
     lv_canvas_set_draw_buf(canvas, &drawBuffer);
 
-    lv_canvas_fill_bg(canvas, lv_color_hex3(0xccc), LV_OPA_COVER);
+    lv_canvas_fill_bg(canvas, lv_color_hex(0xff00ff), LV_OPA_COVER);
     lv_obj_center(canvas);
 
     lv_layer_t layer;
@@ -52,7 +53,7 @@ void initGrid2(lv_obj_t* screen) {
     rectDesc.border_width = 3;
     rectDesc.radius = 5;
 
-    lv_area_t coords = {10, 10, 200, 200};
+    lv_area_t coords = {0, 0, 20, 20};
 
     lv_draw_rect(&layer, &rectDesc, &coords);
 

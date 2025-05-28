@@ -9,8 +9,8 @@
     #define GRID_COLUMNS 10
     #define GRID_ROWS 10
 
-    #define GRID_WIDTH_PX 600
-    #define GRID_HEIGHT_PX 360
+    #define GRID_WIDTH_PX 300
+    #define GRID_HEIGHT_PX 100
 
     // See Brand Guidelines
     #define GR_COLOR_PINK 0xEF0DA1

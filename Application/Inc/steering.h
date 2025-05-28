@@ -24,7 +24,7 @@
 
     extern volatile IncomingData incomingData;
     extern volatile OutgoingData outgoingData;
-    extern volatile bool isDataChanged;
+    extern volatile int isDataChanged;
 
     void updatedDataRecieved(void);
 #endif
