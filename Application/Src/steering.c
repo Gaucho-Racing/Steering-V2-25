@@ -17,11 +17,12 @@
 // TODO Confirm scaling is appropriate (so far lgtm)
 volatile OutgoingData outgoingData = {0};
 volatile IncomingData incomingData = {0};
+volatile int isDataChanged = 0;
 
 void updatedDataRecieved(void)
 {
     outgoingData.steeringStatusMsg.CMEandTME = (globalEncoderPercentages.current << 4) | globalEncoderPercentages.torque;
     incomingData.cellData[40].cellVoltage = 50;
-    refreshScreen(incomingData);
+    isDataChanged = 1;
     // TODO: You have new data, update screen with stuff
 }

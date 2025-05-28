@@ -56,7 +56,7 @@
 osThreadId_t lvglTickHandle;
 const osThreadAttr_t lvglTick_attributes = {
   .name = "lvglTick",
-  .priority = (osPriority_t) osPriorityNormal,
+  .priority = (osPriority_t) osPriorityAboveNormal,
   .stack_size = 4* 1024
 };
 
@@ -219,6 +219,10 @@ void LVGLTimer(void *argument)
   for(;;)
   {
     lv_timer_handler();
+    if (isDataChanged) {
+      refreshScreen(incomingData);
+      isDataChanged = 0;
+    }
     osDelay(10);
   }
   UNUSED(argument);
