@@ -14,7 +14,6 @@
  **********************/
 
 static void disp_flush(lv_display_t *, const lv_area_t *, uint8_t *color_p);
-static void disp_flush_complete(DMA2D_HandleTypeDef *);
 
 /**********************
  *  STATIC VARIABLES
@@ -71,5 +70,7 @@ void lvgl_display_init(void)
 static void disp_flush(lv_display_t *drv, const lv_area_t *area, uint8_t *color_p)
 {
   UNUSED(drv);
-  lv_display_flush_ready(display); // LTDC handles flushing screen
+  UNUSED(area);
+  UNUSED(color_p);
+  lv_display_flush_ready(display);
 }

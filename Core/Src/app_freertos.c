@@ -218,11 +218,6 @@ void LVGLTimer(void *argument)
 {
   for(;;)
   {
-    if (isDataChanged) {
-      refreshScreen(incomingData);
-      isDataChanged = false;
-    }
-
     lv_timer_handler();
     osDelay(10);
   }
