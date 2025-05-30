@@ -24,7 +24,8 @@ void initLVGL(void)
     // lv_obj_set_style_bg_color(cells[30], lv_color_hex(0xff0000), LV_PART_MAIN);
 }
 
-void refreshScreen(volatile IncomingData data) {
+void refreshScreen(volatile IncomingData data)
+{
     updateCellVoltages(data.cellData, lvglChart);
 
     if (data.debugMessage[0] != '\0') {
@@ -35,7 +36,8 @@ void refreshScreen(volatile IncomingData data) {
     }
 }
 
-void initGrid2(lv_obj_t* screen) {
+void initGrid2(lv_obj_t* screen)
+{
     LV_DRAW_BUF_INIT_STATIC(drawBuffer);
 
     lv_obj_t * canvas = lv_canvas_create(screen);
@@ -119,7 +121,8 @@ static void draw_event_cb(lv_event_t * e)
 
 double k = 0;
 
-void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart lvglChart) {
+void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart lvglChart)
+{
     LV_UNUSED(cellData);
 
     k += 1./96.;
@@ -129,7 +132,8 @@ void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart lvglCh
     }
 }
 
-void initDebugMsg() {
+void initDebugMsg()
+{
     debug.panel = lv_obj_create(lv_screen_active());
     lv_obj_set_size(debug.panel, 800, 70);
     lv_obj_center(debug.panel);
