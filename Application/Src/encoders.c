@@ -4,12 +4,17 @@
 #include "steering.h"
 #include "main.h"
 #include "stm32u5xx_hal.h"
+#include "fdcan.h"
+#include "msgIDs.h"
+#include "grIDs.h"
 
 volatile EncoderPercentages globalEncoderPercentages = {0};
 
 void pollEncoderStatus(Encoder encoder)
 {
     uint8_t value = 0;
+
+    EncoderPercentages oldEncoderPercentages = globalEncoderPercentages;
 
     switch(encoder)
     {
@@ -76,31 +81,21 @@ void pollEncoderStatus(Encoder encoder)
     switch(encoder)
     {
         case ENC_CURRENT:
-            if (globalEncoderPercentages.current != value)
-            {
-                globalEncoderPercentages.current = value;
-                updatedDataRecieved();
-            }
-
+            globalEncoderPercentages.current = value;
             break;
 
         case ENC_REGEN:
-            if (globalEncoderPercentages.regen != value)
-            {
-                globalEncoderPercentages.current = value;
-                updatedDataRecieved();
-            }
-
+            globalEncoderPercentages.current = value;
             break;
 
         case ENC_TORQUE:
-            if (globalEncoderPercentages.torque != value)
-            {
-                globalEncoderPercentages.torque = value;
-                updatedDataRecieved();
-            }
-
+            globalEncoderPercentages.torque = value;
             break;
+    }
+
+    if (oldEncoderPercentages.current != globalEncoderPercentages.current || oldEncoderPercentages.regen != globalEncoderPercentages.regen || oldEncoderPercentages.torque != globalEncoderPercentages.torque)
+    {
+        updatedDataRecieved();
     }
 }
 

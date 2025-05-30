@@ -24,5 +24,8 @@ void updatedDataRecieved(void)
     outgoingData.steeringStatusMsg.CMEandTME = (globalEncoderPercentages.current << 4) | globalEncoderPercentages.torque;
     incomingData.cellData[40].cellVoltage = 50;
     isDataChanged = 1;
+    
+    writeMessage(MSG_STEERING_STATUS, GR_ECU, &outgoingData.steeringStatusMsg, 2);
+
     // TODO: You have new data, update screen with stuff
 }
