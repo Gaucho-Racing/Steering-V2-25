@@ -26,7 +26,7 @@ void updatedDataRecieved(void)
 
     isDataChanged = 1;
     
-    writeMessage(MSG_STEERING_STATUS, GR_ECU, &outgoingData.steeringStatusMsg, 2);
+    writeMessage(MSG_STEERING_STATUS, GR_ECU, (uint8_t*)&outgoingData.steeringStatusMsg, 2);
 
     // TODO: You have new data, update screen with stuff
 }

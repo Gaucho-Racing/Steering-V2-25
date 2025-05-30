@@ -28,7 +28,7 @@ void refreshScreen(volatile IncomingData data) {
     updateCellVoltages(data.cellData, lvglChart);
 
     if (data.debugMessage[0] != '\0') {
-        lv_label_set_text(debug.text, data.debugMessage);
+        lv_label_set_text(debug.text, (const char*)data.debugMessage);
         lv_obj_clear_flag(debug.panel, LV_OBJ_FLAG_HIDDEN);
     } else {
         lv_obj_add_flag(debug.panel, LV_OBJ_FLAG_HIDDEN);
@@ -120,6 +120,8 @@ static void draw_event_cb(lv_event_t * e)
 double k = 0;
 
 void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart lvglChart) {
+    UNUSED(cellData);
+
     k += 1./96.;
     uint32_t i;
     for(i = 0; i < lvglChart.len; i++) {
