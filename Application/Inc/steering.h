@@ -9,7 +9,7 @@
     typedef struct {
         uint8_t cellVoltage;
         uint8_t cellTemperature;
-    } IncomingACUCellData; // Do not reorder
+    } IncomingACUCellData; // Do not reorder!!!
 
     typedef struct {
         IncomingACUCellData cellData[160];
@@ -20,6 +20,7 @@
 
     typedef struct {
         SteeringStatusMsg steeringStatusMsg;
+        // Add more if needed
     } OutgoingData;
 
     extern volatile IncomingData incomingData;
