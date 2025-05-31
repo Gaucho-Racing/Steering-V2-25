@@ -47,6 +47,7 @@
 #include "lvgl/demos/lv_demos.h"
 #include "lvgl_port_display.h"
 #include "utils.h"
+#include "string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -99,7 +100,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  strncpy(incomingData.debugMessage, "Booting the Dark Tech", 22);
   /* USER CODE END Init */
 
   /* Configure the System Power */
