@@ -100,7 +100,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  strncpy(incomingData.debugMessage, "Booting the Dark Tech", 22);
+  strncpy((char*)incomingData.debugMessage, "Booting the Dark Tech", 22);
   /* USER CODE END Init */
 
   /* Configure the System Power */
