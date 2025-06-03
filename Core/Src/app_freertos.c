@@ -184,7 +184,7 @@ void MX_FREERTOS_Init(void) {
   lvglTickHandle = osThreadNew(LVGLTick, NULL, &lvglTick_attributes);
   lvglTimerHandle = osThreadNew(LVGLTimer, NULL, &lvglTimer_attributes);
   pinPollHandle = osThreadNew(PinPoll, NULL, &pinPoll_attributes);
-  //statusHeartbeatHandle = osThreadNew(StatusHeartbeat, NULL, &statusHeartbeat_attributes);
+  statusHeartbeatHandle = osThreadNew(StatusHeartbeat, NULL, &statusHeartbeat_attributes);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
