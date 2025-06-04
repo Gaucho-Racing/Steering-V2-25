@@ -18,18 +18,18 @@ void initLVGL(void)
     lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x00ff00), LV_PART_MAIN);
     lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
 
-    initCellChart(incomingData.cellData, 24*4, 0);
+    initCellChart((IncomingACUCellData*)incomingData.cellData, 24*4, 0);
     initDebugMsg();
     initGrid2(lv_screen_active());
     // lv_obj_set_style_bg_color(cells[30], lv_color_hex(0xff0000), LV_PART_MAIN);
 }
 
-void refreshScreen(volatile IncomingData data)
+void refreshScreen(void)
 {
-    updateCellVoltages(data.cellData, lvglChart);
+    updateCellVoltages((IncomingACUCellData*)incomingData.cellData, lvglChart);
 
-    if (data.debugMessage[0] != '\0') {
-        lv_label_set_text(debug.text, (const char*)data.debugMessage);
+    if (incomingData.debugMessage[0] != '\0') {
+        lv_label_set_text(debug.text, (const char*)incomingData.debugMessage);
         lv_obj_clear_flag(debug.panel, LV_OBJ_FLAG_HIDDEN);
     } else {
         lv_obj_add_flag(debug.panel, LV_OBJ_FLAG_HIDDEN);
@@ -121,7 +121,7 @@ static void draw_event_cb(lv_event_t * e)
 
 double k = 0;
 
-void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart lvglChart)
+void updateCellVoltages(IncomingACUCellData *cellData, LvglChart lvglChart)
 {
     LV_UNUSED(cellData);
 
@@ -145,7 +145,7 @@ void initDebugMsg()
     lv_obj_center(debug.text);
 }
 
-void initCellChart(volatile IncomingACUCellData *cellData, size_t dataLen, int32_t y)
+void initCellChart(IncomingACUCellData *cellData, size_t dataLen, int32_t y)
 {
 
     LV_UNUSED(y);

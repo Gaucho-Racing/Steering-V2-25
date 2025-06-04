@@ -220,7 +220,7 @@ void LVGLTimer(void *argument)
   {
     lv_timer_handler();
     //if (isDataChanged) {
-    refreshScreen(incomingData);
+    refreshScreen();
     //  isDataChanged = 0;
     //}
     osDelay(1);
@@ -243,7 +243,6 @@ void PinPoll(void *argument)
 {
   for(;;)
   {
-    LOGOMATIC("C\n");
     pollEncoderStatus(ENC_CURRENT);
     osDelay(ENCODER_POLL_DELAY);
 
@@ -255,7 +254,6 @@ void PinPoll(void *argument)
 
     pollButtonStatus();
     osDelay(ENCODER_POLL_DELAY);
-    LOGOMATIC("/C\n");
   }
   UNUSED(argument);
 }
@@ -265,10 +263,8 @@ void StatusHeartbeat(void *argument)
 {
   for(;;)
   {
-    LOGOMATIC("D\n");
     writeToECU(MSG_STEERING_STATUS, (uint8_t*)&outgoingData.steeringStatusMsg, 2);
-    osDelay(250);
-    LOGOMATIC("/D\n");
+    osDelay(200);
   }
   UNUSED(argument);
 }

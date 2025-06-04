@@ -34,9 +34,9 @@
     extern volatile LvglLabel debug;
 
     void initLVGL(void);
-    void refreshScreen(volatile IncomingData data);
-    void updateCellVoltages(volatile IncomingACUCellData *cellData, LvglChart chart);
-    void initCellChart(volatile IncomingACUCellData *cellData, size_t dataLen, int32_t y);
+    void refreshScreen(void);
+    void updateCellVoltages(IncomingACUCellData *cellData, LvglChart chart);
+    void initCellChart(IncomingACUCellData *cellData, size_t dataLen, int32_t y);
     void initGrid(lv_obj_t* screen, lv_obj_t* cells[]);
     void initGrid2(lv_obj_t* screen);
 
