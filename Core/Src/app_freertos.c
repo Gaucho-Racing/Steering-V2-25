@@ -218,12 +218,10 @@ void LVGLTimer(void *argument)
 {
   for(;;)
   {
+    if (refreshScreen()) lv_obj_invalidate(lv_screen_active());
+    
     lv_timer_handler();
-    //if (isDataChanged) {
-    refreshScreen();
-    //  isDataChanged = 0;
-    //}
-    osDelay(1);
+    osDelay(10);
   }
   UNUSED(argument);
 }
