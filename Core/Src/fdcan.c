@@ -46,10 +46,12 @@ void writeMessage(uint16_t msgID, uint8_t destID, uint8_t data[], uint32_t len)
 
   TxHeader.FDFormat = FDCAN_FD_CAN;
 
+  #ifndef TEST_NO_CAN
   if(HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, data) != HAL_OK)
   {
       Error_Handler();
   }
+  #endif // TEST_NO_CAN
 }
 
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
