@@ -17,15 +17,13 @@ void initLVGL(void)
     lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x00ff00), LV_PART_MAIN);
     lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
 
-    initCellChart((IncomingACUCellData*)incomingData.cellData, 24*4, 0);
     initGrid2(lv_screen_active());
     initDebugMsg();
-    // lv_obj_set_style_bg_color(cells[30], lv_color_hex(0xff0000), LV_PART_MAIN);
 }
 
 int refreshScreen(void)
 {
-    updateCellVoltages((IncomingACUCellData*)incomingData.cellData);
+    updateCellVoltages();
 
     if (incomingData.debugMessage[0] != '\0') {
         lv_label_set_text_static(lvglObjects.label.text, (const char*)incomingData.debugMessage);
@@ -34,47 +32,87 @@ int refreshScreen(void)
         lv_obj_add_flag(lvglObjects.label.panel, LV_OBJ_FLAG_HIDDEN);
     }
 
-    lv_layer_t layer;
-    lv_canvas_init_layer(lvglObjects.canvas, &layer);
-
-    lv_draw_rect_dsc_t rectDesc;
-    lv_draw_rect_dsc_init(&rectDesc);
-    rectDesc.bg_color = lv_color_hex(0x00ff00);
-    rectDesc.border_color = lv_color_hex(GR_COLOR_PURPLE);
-    rectDesc.border_width = 3;
-    rectDesc.radius = 5;
-
-    lv_area_t coords = {0, 0, 200, 200};
-
-    lv_draw_rect(&layer, &rectDesc, &coords);
-
-    lv_canvas_finish_layer(lvglObjects.canvas, &layer);
     return 1;
 }
 
-void initGrid2(lv_obj_t* screen)
+char cellTempBuf[CELL_COUNT*3];
+
+void initGrid2()
 {
     LV_DRAW_BUF_INIT_STATIC(drawBuffer);
 
-    lvglObjects.canvas = lv_canvas_create(screen);
+    lvglObjects.canvas = lv_canvas_create(lv_screen_active());
     lv_obj_set_size(lvglObjects.canvas, GRID_WIDTH_PX, GRID_HEIGHT_PX);
     lv_canvas_set_draw_buf(lvglObjects.canvas, &drawBuffer);
 
     lv_canvas_fill_bg(lvglObjects.canvas, lv_color_hex(0xff00ff), LV_OPA_COVER);
     lv_obj_center(lvglObjects.canvas);
+
+    for (size_t i = 0; i < CELL_COUNT; i++) {
+        cellTempBuf[i*3+2] = '\0';
+    }
 }
 
-double k = 0;
+lv_color_t tempMap(uint8_t temp) {
+    if (temp < 50) return lv_color_hex(CT_COLOR_BLACK);
+    if (temp < 135) return lv_color_mix(lv_color_hex(CT_COLOR_RED), lv_color_hex(CT_COLOR_YELLOW), (temp-50)<<1);
+    if (temp < 220) return lv_color_mix(lv_color_hex(CT_COLOR_YELLOW), lv_color_hex(CT_COLOR_GREEN), (temp-135)<<1);
+    return lv_color_hex(CT_COLOR_PURPLE);
+}
 
-void updateCellVoltages(IncomingACUCellData *cellData)
+void updateCellVoltages()
 {
-    LV_UNUSED(cellData);
+    lv_layer_t layer;
+    lv_canvas_init_layer(lvglObjects.canvas, &layer);
 
-    k += 1./96.;
-    uint32_t i;
-    for(i = 0; i < 20; i++) {
-        lv_chart_set_next_value(lvglObjects.chart.chart, lvglObjects.chart.ser, (int) ((sin(k + (double) i / (double) lvglObjects.chart.len ) + 1.) * 50.));
+    lv_draw_rect_dsc_t rectDesc;
+    lv_draw_rect_dsc_init(&rectDesc);
+    rectDesc.border_color = lv_color_hex(GR_COLOR_PURPLE);
+    rectDesc.border_width = 0;
+    rectDesc.radius = 0;
+
+    lv_draw_label_dsc_t labelDesc;
+    lv_draw_label_dsc_init(&labelDesc);
+    labelDesc.color = lv_color_hex(GR_COLOR_WHITE);
+    
+    int i = 0;
+    int caseNum = 0;
+    lv_area_t coords;
+    while (i < CELL_COUNT) {
+        coords.x1 = 10 + caseNum*50;
+        coords.x2 = 30 + caseNum*50;
+
+        for (int j = 0; j < 15; j++) {
+            rectDesc.bg_color = tempMap(incomingData.cellData[i].cellTemperature);
+            coords.y1 = 10 + j*25;
+            coords.y2 = 30 + j*25;
+            cellTempBuf[i*3] = ((incomingData.cellData[i].cellTemperature>>2)/10) + '0';
+            cellTempBuf[(i*3)+1] = ((incomingData.cellData[i].cellTemperature>>2)%10) + '0';
+            labelDesc.text = (cellTempBuf+(i*3));
+            lv_draw_rect(&layer, &rectDesc, &coords);
+            lv_draw_label(&layer, &labelDesc, &coords);
+            i++;
+        }
+
+        coords.x1 = 35 + caseNum*50;
+        coords.x2 = 55 + caseNum*50;
+        i += 12;
+        for (int j = 0; j < 13; j++) {
+            rectDesc.bg_color = tempMap(incomingData.cellData[i].cellTemperature);
+            coords.y1 = 20 + j*25;
+            coords.y2 = 40 + j*25;
+            cellTempBuf[i*3] = ((incomingData.cellData[i].cellTemperature>>2)/10) + '0';
+            cellTempBuf[(i*3)+1] = ((incomingData.cellData[i].cellTemperature>>2)%10) + '0';
+            labelDesc.text = (cellTempBuf+(i*3));
+            lv_draw_rect(&layer, &rectDesc, &coords);
+            lv_draw_label(&layer, &labelDesc, &coords);
+            i--;
+        }
+        i += 14;
+        caseNum++;
     }
+
+    lv_canvas_finish_layer(lvglObjects.canvas, &layer);
 }
 
 void initDebugMsg()
@@ -88,29 +126,4 @@ void initDebugMsg()
     lvglObjects.label.text = lv_label_create(lvglObjects.label.panel);
     lv_label_set_text(lvglObjects.label.text, "");
     lv_obj_center(lvglObjects.label.text);
-}
-
-void initCellChart(IncomingACUCellData *cellData, size_t dataLen, int32_t y)
-{
-
-    LV_UNUSED(y);
-
-    /*Create a chart1*/
-    lv_obj_t * chart = lv_chart_create(lv_screen_active());
-    lv_chart_set_type(chart, LV_CHART_TYPE_BAR);
-    lv_chart_set_point_count(chart, dataLen);
-    lv_obj_set_style_pad_column(chart, 2, 0);
-    lv_obj_set_size(chart, 260*3, 160);
-    lv_obj_set_pos(chart, 0, 200);
-    lv_chart_set_update_mode(chart, LV_CHART_UPDATE_MODE_CIRCULAR);
-
-    lv_chart_series_t * ser = lv_chart_add_series(chart, lv_color_hex(0xff0000), LV_CHART_AXIS_PRIMARY_Y);
-    //lv_obj_add_event_cb(chart, draw_event_cb, LV_EVENT_DRAW_TASK_ADDED, NULL);
-    lv_obj_add_flag(chart, LV_OBJ_FLAG_SEND_DRAW_TASK_EVENTS);
-
-    lvglObjects.chart.chart = chart;
-    lvglObjects.chart.ser = ser;
-    lvglObjects.chart.len = dataLen;
-
-    updateCellVoltages(cellData);
 }

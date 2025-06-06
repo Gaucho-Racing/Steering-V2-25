@@ -10,7 +10,7 @@
     #define GRID_ROWS 10
 
     #define GRID_WIDTH_PX 800
-    #define GRID_HEIGHT_PX 300
+    #define GRID_HEIGHT_PX 400
 
     // See Brand Guidelines
     #define GR_COLOR_PINK 0xEF0DA1
@@ -18,6 +18,13 @@
     #define GR_COLOR_NAVY 0x195297
     #define GR_COLOR_GRAY 0x9AA3B0
     #define GR_COLOR_WHITE 0xFFFFFF
+
+    // See Brand Guidelines
+    #define CT_COLOR_BLACK 0x202020
+    #define CT_COLOR_RED 0xd02020
+    #define CT_COLOR_YELLOW 0xb0b020
+    #define CT_COLOR_GREEN 0x20d020
+    #define CT_COLOR_PURPLE GR_COLOR_PURPLE
 
     typedef struct {
         struct {
@@ -36,10 +43,8 @@
 
     void initLVGL(void);
     int refreshScreen(void);
-    void updateCellVoltages(IncomingACUCellData *cellData);
-    void initCellChart(IncomingACUCellData *cellData, size_t dataLen, int32_t y);
-    void initGrid(lv_obj_t* screen, lv_obj_t* cells[]);
-    void initGrid2(lv_obj_t* screen);
+    void updateCellVoltages();
+    void initGrid2();
 
     void initDebugMsg();
 #endif

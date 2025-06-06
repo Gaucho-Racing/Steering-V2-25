@@ -6,6 +6,8 @@
 #ifndef STEERING_H
     #define STEERING_H
 
+    #define CELL_COUNT 140
+
     typedef struct {
         uint8_t cellVoltage;
         uint8_t cellTemperature;
